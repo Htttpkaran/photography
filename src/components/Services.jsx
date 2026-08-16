@@ -165,7 +165,7 @@ export default function Services() {
             onClick={() => setSelectedServiceIndex(null)}
           >
             <div 
-              className="relative w-full max-w-xl bg-[#251c14] border border-accent/40 rounded-2xl p-6 sm:p-8 text-paper shadow-2xl space-y-6 my-auto max-h-[90vh] overflow-y-auto"
+              className="relative w-full max-w-xl bg-[#251c14] border border-accent/40 rounded-2xl p-6 sm:p-8 text-ink shadow-2xl space-y-6 my-auto max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Top Header Bar */}
@@ -174,7 +174,7 @@ export default function Services() {
                   <span className="font-mono text-xs px-2.5 py-1 rounded-md bg-accent/20 border border-accent/40 text-accent font-semibold">
                     {String(selectedServiceIndex + 1).padStart(2, '0')}
                   </span>
-                  <span className="text-xs uppercase tracking-widest text-accent font-mono">
+                  <span className="text-xs uppercase tracking-widest text-accent font-mono font-medium">
                     Service Overview
                   </span>
                 </div>
@@ -193,7 +193,7 @@ export default function Services() {
                   <h3 className="font-serif text-2xl sm:text-3xl font-light text-accent">
                     {activeServiceItem.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-stone font-light leading-relaxed mt-2">
+                  <p className="text-xs sm:text-sm text-ink/90 font-light leading-relaxed mt-2">
                     {activeServiceItem.details}
                   </p>
                 </div>
@@ -203,9 +203,9 @@ export default function Services() {
                     <p className="text-[10px] uppercase tracking-widest text-accent font-semibold">
                       Key Package Inclusions:
                     </p>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                       {activeServiceItem.features.map((feat, i) => (
-                        <li key={i} className="text-xs text-paper/90 flex items-center gap-2">
+                        <li key={i} className="text-xs text-ink/90 font-medium flex items-center gap-2">
                           <Sparkles className="w-3.5 h-3.5 text-accent shrink-0" />
                           <span>{feat}</span>
                         </li>
@@ -225,19 +225,19 @@ export default function Services() {
               </div>
 
               {/* Navigation Controls */}
-              <div className="flex items-center justify-between border-t border-accent/20 pt-4 text-xs text-stone">
+              <div className="flex items-center justify-between border-t border-accent/20 pt-4 text-xs text-ink/80">
                 <button
                   onClick={handlePrev}
-                  className="flex items-center gap-1 hover:text-accent transition-colors font-medium"
+                  className="flex items-center gap-1 text-ink/80 hover:text-accent transition-colors font-medium"
                 >
                   <ChevronLeft className="w-4 h-4" /> Previous
                 </button>
-                <span className="font-mono text-[11px] text-accent">
+                <span className="font-mono text-[11px] text-accent font-semibold">
                   {selectedServiceIndex + 1} of {displayedOfferings.length}
                 </span>
                 <button
                   onClick={handleNext}
-                  className="flex items-center gap-1 hover:text-accent transition-colors font-medium"
+                  className="flex items-center gap-1 text-ink/80 hover:text-accent transition-colors font-medium"
                 >
                   Next <ChevronRight className="w-4 h-4" />
                 </button>

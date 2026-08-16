@@ -247,7 +247,7 @@ export default function Shopping() {
             onClick={() => setSelectedProductIndex(null)}
           >
             <div 
-              className="relative w-full max-w-2xl bg-[#1e1711] border border-accent/40 rounded-2xl p-6 sm:p-8 text-paper shadow-2xl space-y-6 my-auto max-h-[90vh] overflow-y-auto"
+              className="relative w-full max-w-2xl bg-[#1e1711] border border-accent/40 rounded-2xl p-6 sm:p-8 text-ink shadow-2xl space-y-6 my-auto max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Top Header */}
@@ -282,7 +282,7 @@ export default function Shopping() {
                   />
                 </div>
                 <div className="space-y-4 text-left">
-                  <h3 className="font-serif text-2xl font-light text-paper">
+                  <h3 className="font-serif text-2xl font-light text-ink">
                     {activeProduct.name}
                   </h3>
                   <div className="flex items-baseline gap-3">
@@ -290,12 +290,12 @@ export default function Shopping() {
                       {activeProduct.price}
                     </span>
                     {activeProduct.originalPrice && (
-                      <span className="text-sm text-stone/60 line-through">
+                      <span className="text-sm text-stone line-through">
                         {activeProduct.originalPrice}
                       </span>
                     )}
                   </div>
-                  <p className="text-xs sm:text-sm text-stone font-light leading-relaxed">
+                  <p className="text-xs sm:text-sm text-ink/90 font-light leading-relaxed">
                     {activeProduct.description}
                   </p>
                   {activeProduct.specs && (
@@ -305,7 +305,7 @@ export default function Shopping() {
                       </p>
                       <ul className="space-y-1.5">
                         {activeProduct.specs.map((spec, i) => (
-                          <li key={i} className="text-xs text-paper/90 flex items-center gap-2">
+                          <li key={i} className="text-xs text-ink/90 font-medium flex items-center gap-2">
                             <Sparkles className="w-3.5 h-3.5 text-accent shrink-0" />
                             <span>{spec}</span>
                           </li>
@@ -323,19 +323,19 @@ export default function Shopping() {
               </div>
 
               {/* Navigation Controls */}
-              <div className="flex items-center justify-between border-t border-accent/20 pt-4 text-xs text-stone">
+              <div className="flex items-center justify-between border-t border-accent/20 pt-4 text-xs text-ink/80">
                 <button
                   onClick={handlePrev}
-                  className="flex items-center gap-1 hover:text-accent transition-colors font-medium"
+                  className="flex items-center gap-1 text-ink/80 hover:text-accent transition-colors font-medium"
                 >
                   <ChevronLeft className="w-4 h-4" /> Previous
                 </button>
-                <span className="font-mono text-[11px] text-accent">
+                <span className="font-mono text-[11px] text-accent font-semibold">
                   {selectedProductIndex + 1} of {filteredProducts.length}
                 </span>
                 <button
                   onClick={handleNext}
-                  className="flex items-center gap-1 hover:text-accent transition-colors font-medium"
+                  className="flex items-center gap-1 text-ink/80 hover:text-accent transition-colors font-medium"
                 >
                   Next <ChevronRight className="w-4 h-4" />
                 </button>
