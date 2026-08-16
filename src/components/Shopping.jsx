@@ -8,7 +8,6 @@ const categories = [
   'Photo Books',
   'Gift Items',
   'Gift Vouchers',
-  'Presets & LUTs',
 ];
 
 const products = [
@@ -139,19 +138,6 @@ const products = [
     image: '/Gallery/baby shower/01.webp',
     description: 'Special gift card covering a complete 2-hour Maternity or Rice Ceremony session.',
     specs: ['Includes studio session', '15 printed 5x7 photos', 'Digital gallery link', 'Valid for 6 months']
-  },
-
-  // --- Presets & LUTs ---
-  {
-    id: 'preset-1',
-    name: 'Golden Glow Lightroom Presets',
-    category: 'Presets & LUTs',
-    price: '₹499',
-    originalPrice: '₹999',
-    tag: 'Digital Pack',
-    image: '/Gallery/pre wedding/1a.webp',
-    description: '12 signature warm gold Lightroom color presets created for Bengali wedding and portrait tones.',
-    specs: ['Desktop & Mobile compatible', 'Includes DNG & XMP files', 'Instant digital delivery', '1-Click color grading']
   }
 ];
 
