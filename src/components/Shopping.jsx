@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShoppingBag, Check, Sparkles, MessageCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { ShoppingBag, Sparkles, MessageCircle, X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const categories = [
@@ -103,11 +103,13 @@ const products = [
 
 export default function Shopping() {
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [expandedProductId, setExpandedProductId] = useState(null);
+  const [selectedProductIndex, setSelectedProductIndex] = useState(null);
 
   const filteredProducts = selectedCategory === 'All'
     ? products
     : products.filter((p) => p.category === selectedCategory);
+
+  const activeProduct = selectedProductIndex !== null ? filteredProducts[selectedProductIndex] : null;
 
   const handleWhatsAppOrder = (product) => {
     const text = `Hi Golden Moments Photography! I would like to order/inquire about: *${product.name}* (${product.price}). Please let me know how to proceed.`;
@@ -115,8 +117,14 @@ export default function Shopping() {
     window.open(url, '_blank');
   };
 
-  const toggleDetails = (id) => {
-    setExpandedProductId((prev) => (prev === id ? null : id));
+  const handlePrev = (e) => {
+    e.stopPropagation();
+    setSelectedProductIndex((prev) => (prev > 0 ? prev - 1 : filteredProducts.length - 1));
+  };
+
+  const handleNext = (e) => {
+    e.stopPropagation();
+    setSelectedProductIndex((prev) => (prev < filteredProducts.length - 1 ? prev + 1 : 0));
   };
 
   return (
@@ -143,7 +151,7 @@ export default function Shopping() {
             key={cat}
             onClick={() => {
               setSelectedCategory(cat);
-              setExpandedProductId(null);
+              setSelectedProductIndex(null);
             }}
             className={`px-4 sm:px-6 py-2 rounded-full text-xs uppercase tracking-widest transition-all duration-300 font-medium ${
               selectedCategory === cat
@@ -166,115 +174,179 @@ export default function Shopping() {
           transition={{ duration: 0.2, ease: 'easeInOut' }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 items-start"
         >
-          {filteredProducts.map((product) => {
-            const isExpanded = expandedProductId === product.id;
-
-            return (
-              <div
-                key={product.id}
-                className={`group flex flex-col justify-between rounded-2xl border bg-paper/60 p-4 shadow-md transition-all duration-300 ${
-                  isExpanded ? 'border-accent shadow-xl bg-paper/90 ring-1 ring-accent/30' : 'border-line/80 hover:border-accent/50 hover:shadow-xl'
-                }`}
-              >
-                <div>
-                  {/* Product Image */}
-                  <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-line mb-4">
-                    <img
-                      src={encodeURI(product.image)}
-                      alt={product.name}
-                      loading="lazy"
-                      onError={(e) => {
-                        e.target.src = '/services/Wedding.jpg';
-                      }}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    {product.tag && (
-                      <span className="absolute top-3 left-3 z-10 rounded-md bg-accent/90 backdrop-blur-md px-2.5 py-1 text-[10px] uppercase font-semibold tracking-wider text-paper shadow-sm">
-                        {product.tag}
-                      </span>
-                    )}
+          {filteredProducts.map((product, index) => (
+            <div
+              key={product.id}
+              onClick={() => setSelectedProductIndex(index)}
+              className="group flex flex-col justify-between rounded-2xl border border-line/80 bg-paper/60 p-4 shadow-md hover:border-accent hover:shadow-xl transition-all duration-300 cursor-pointer"
+            >
+              <div>
+                {/* Product Image */}
+                <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-line mb-4">
+                  <img
+                    src={encodeURI(product.image)}
+                    alt={product.name}
+                    loading="lazy"
+                    onError={(e) => {
+                      e.target.src = '/services/Wedding.jpg';
+                    }}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {product.tag && (
+                    <span className="absolute top-3 left-3 z-10 rounded-md bg-accent/90 backdrop-blur-md px-2.5 py-1 text-[10px] uppercase font-semibold tracking-wider text-paper shadow-sm">
+                      {product.tag}
+                    </span>
+                  )}
+                  {/* Hover icon indicator */}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="p-2.5 rounded-full bg-paper/20 backdrop-blur-md text-paper border border-paper/40 shadow-lg">
+                      <Maximize2 className="w-5 h-5 text-accent" />
+                    </span>
                   </div>
-
-                  {/* Category & Title */}
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-accent">
-                    {product.category}
-                  </span>
-                  <h3 className="font-serif text-lg font-medium text-ink mt-1 group-hover:text-accent transition-colors">
-                    {product.name}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-xs text-stone font-light line-clamp-2 mt-1.5 leading-relaxed">
-                    {product.description}
-                  </p>
-
-                  {/* Expandable Details Div (Slides down when clicked) */}
-                  <AnimatePresence>
-                    {isExpanded && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3, ease: 'easeInOut' }}
-                        className="overflow-hidden"
-                      >
-                        <div className="mt-3 pt-3 border-t border-line/60 space-y-3 text-left">
-                          <p className="text-[10px] uppercase tracking-widest text-accent font-semibold">
-                            Highlights &amp; Specs:
-                          </p>
-                          <ul className="space-y-1.5">
-                            {product.specs.map((spec, i) => (
-                              <li key={i} className="text-xs text-ink/90 flex items-center gap-2">
-                                <Sparkles className="w-3.5 h-3.5 text-accent shrink-0" />
-                                <span>{spec}</span>
-                              </li>
-                            ))}
-                          </ul>
-
-                          <button
-                            onClick={() => handleWhatsAppOrder(product)}
-                            className="w-full mt-2 py-2.5 px-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] uppercase font-semibold tracking-wider flex items-center justify-center gap-1.5 shadow-md hover:shadow-emerald-600/30 transition-all"
-                          >
-                            <MessageCircle className="w-3.5 h-3.5" /> Order on WhatsApp
-                          </button>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
 
-                {/* Price & Action */}
-                <div className="mt-5 pt-4 border-t border-line/60 flex items-center justify-between">
-                  <div className="flex items-baseline gap-2">
-                    <span className="font-serif text-xl font-semibold text-accent">
-                      {product.price}
+                {/* Category & Title */}
+                <span className="text-[10px] font-mono uppercase tracking-widest text-accent">
+                  {product.category}
+                </span>
+                <h3 className="font-serif text-lg font-medium text-ink mt-1 group-hover:text-accent transition-colors">
+                  {product.name}
+                </h3>
+
+                {/* Description */}
+                <p className="text-xs text-stone font-light line-clamp-2 mt-1.5 leading-relaxed">
+                  {product.description}
+                </p>
+              </div>
+
+              {/* Price */}
+              <div className="mt-5 pt-4 border-t border-line/60 flex items-baseline gap-2">
+                <span className="font-serif text-xl font-semibold text-accent">
+                  {product.price}
+                </span>
+                {product.originalPrice && (
+                  <span className="text-xs text-stone/60 line-through">
+                    {product.originalPrice}
+                  </span>
+                )}
+              </div>
+            </div>
+          ))}
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Product Details Modal Popup */}
+      <AnimatePresence>
+        {activeProduct && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+            onClick={() => setSelectedProductIndex(null)}
+          >
+            <div 
+              className="relative w-full max-w-2xl bg-[#1e1711] border border-accent/40 rounded-2xl p-6 sm:p-8 text-paper shadow-2xl space-y-6 my-auto max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Top Header */}
+              <div className="flex items-center justify-between border-b border-accent/20 pb-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs uppercase tracking-widest text-accent font-mono">
+                    {activeProduct.category}
+                  </span>
+                  {activeProduct.tag && (
+                    <span className="rounded-md bg-accent/90 px-2 py-0.5 text-[10px] font-semibold text-paper uppercase tracking-wider">
+                      {activeProduct.tag}
                     </span>
-                    {product.originalPrice && (
-                      <span className="text-xs text-stone/60 line-through">
-                        {product.originalPrice}
+                  )}
+                </div>
+                <button
+                  onClick={() => setSelectedProductIndex(null)}
+                  className="p-2 rounded-full border border-accent/40 bg-accent/10 text-accent hover:bg-accent hover:text-paper transition-all"
+                  title="Close"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Content Body */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
+                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-line border border-accent/30">
+                  <img
+                    src={encodeURI(activeProduct.image)}
+                    alt={activeProduct.name}
+                    onError={(e) => { e.target.src = '/services/Wedding.jpg'; }}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="space-y-4 text-left">
+                  <h3 className="font-serif text-2xl font-light text-paper">
+                    {activeProduct.name}
+                  </h3>
+                  <div className="flex items-baseline gap-3">
+                    <span className="font-serif text-2xl font-semibold text-accent">
+                      {activeProduct.price}
+                    </span>
+                    {activeProduct.originalPrice && (
+                      <span className="text-sm text-stone/60 line-through">
+                        {activeProduct.originalPrice}
                       </span>
                     )}
                   </div>
-
+                  <p className="text-xs sm:text-sm text-stone font-light leading-relaxed">
+                    {activeProduct.description}
+                  </p>
+                  {activeProduct.specs && (
+                    <div className="pt-3 border-t border-accent/20 space-y-2">
+                      <p className="text-[10px] uppercase tracking-widest text-accent font-semibold">
+                        Specifications &amp; Features:
+                      </p>
+                      <ul className="space-y-1.5">
+                        {activeProduct.specs.map((spec, i) => (
+                          <li key={i} className="text-xs text-paper/90 flex items-center gap-2">
+                            <Sparkles className="w-3.5 h-3.5 text-accent shrink-0" />
+                            <span>{spec}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   <button
-                    onClick={() => toggleDetails(product.id)}
-                    className={`py-2.5 px-4 rounded-full border text-[11px] uppercase font-medium tracking-wider transition-all text-center flex items-center justify-center gap-1.5 ${
-                      isExpanded 
-                        ? 'border-accent bg-accent/15 text-accent font-semibold' 
-                        : 'border-line text-stone hover:text-ink hover:border-stone'
-                    }`}
+                    onClick={() => handleWhatsAppOrder(activeProduct)}
+                    className="w-full py-3 px-4 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs uppercase font-semibold tracking-wider flex items-center justify-center gap-2 shadow-lg hover:shadow-emerald-600/30 transition-all mt-4"
                   >
-                    <span>{isExpanded ? 'Hide' : 'Details'}</span>
-                    {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                    <MessageCircle className="w-4 h-4" /> Order on WhatsApp
                   </button>
                 </div>
               </div>
-            );
-          })}
-        </motion.div>
+
+              {/* Navigation Controls */}
+              <div className="flex items-center justify-between border-t border-accent/20 pt-4 text-xs text-stone">
+                <button
+                  onClick={handlePrev}
+                  className="flex items-center gap-1 hover:text-accent transition-colors font-medium"
+                >
+                  <ChevronLeft className="w-4 h-4" /> Previous
+                </button>
+                <span className="font-mono text-[11px] text-accent">
+                  {selectedProductIndex + 1} of {filteredProducts.length}
+                </span>
+                <button
+                  onClick={handleNext}
+                  className="flex items-center gap-1 hover:text-accent transition-colors font-medium"
+                >
+                  Next <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
       </AnimatePresence>
     </section>
   );
 }
+
 
 
