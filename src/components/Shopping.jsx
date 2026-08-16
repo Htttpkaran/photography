@@ -213,16 +213,28 @@ export default function Shopping() {
                 </p>
               </div>
 
-              {/* Price */}
-              <div className="mt-5 pt-4 border-t border-line/60 flex items-baseline gap-2">
-                <span className="font-serif text-xl font-semibold text-accent">
-                  {product.price}
-                </span>
-                {product.originalPrice && (
-                  <span className="text-xs text-stone/60 line-through">
-                    {product.originalPrice}
+              {/* Price & Action */}
+              <div className="mt-5 pt-4 border-t border-line/60 flex items-center justify-between">
+                <div className="flex items-baseline gap-2">
+                  <span className="font-serif text-xl font-semibold text-accent">
+                    {product.price}
                   </span>
-                )}
+                  {product.originalPrice && (
+                    <span className="text-xs text-stone/60 line-through">
+                      {product.originalPrice}
+                    </span>
+                  )}
+                </div>
+
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleWhatsAppOrder(product);
+                  }}
+                  className="py-2 px-3.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] uppercase font-semibold tracking-wider flex items-center gap-1.5 shadow-md hover:shadow-emerald-600/30 transition-all shrink-0"
+                >
+                  <MessageCircle className="w-3.5 h-3.5" /> Order
+                </button>
               </div>
             </div>
           ))}
