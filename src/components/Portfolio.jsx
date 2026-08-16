@@ -438,19 +438,12 @@ export default function Portfolio() {
           >
             {/* Top Header Bar */}
             <div 
-              className="w-full max-w-5xl flex items-center justify-between z-10"
+              className="w-full max-w-5xl flex items-center justify-start z-10"
               onClick={(e) => e.stopPropagation()}
             >
               <span className="text-xs uppercase tracking-widest text-accent font-mono">
                 {activeItem.category} &middot; {selectedItemIndex + 1} of {displayedItems.length}
               </span>
-              <button
-                onClick={() => setSelectedItemIndex(null)}
-                className="p-2 rounded-full border border-accent/40 bg-accent/10 text-accent hover:bg-accent hover:text-paper hover:border-accent transition-all shadow-md backdrop-blur-md group"
-                title="Close"
-              >
-                <X className="w-6 h-6 text-accent group-hover:text-paper transition-colors" />
-              </button>
             </div>
 
             {/* Main Large Image Container */}
@@ -467,20 +460,31 @@ export default function Portfolio() {
                 <ChevronLeft className="w-6 h-6 text-accent group-hover:text-paper transition-colors" />
               </button>
 
-              {/* Image */}
-              <motion.img
-                key={activeItem.id}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-                src={encodeURI(activeItem.src)}
-                alt={activeItem.title}
-                onError={(e) => {
-                  e.target.src = '/services/baby-born.jpg';
-                }}
-                className="max-h-[75vh] max-w-full object-contain rounded-lg shadow-2xl border border-accent/30"
-              />
+              {/* Image Container with Close Button on Top Right */}
+              <div className="relative flex items-center justify-center max-h-[75vh] max-w-full">
+                <motion.img
+                  key={activeItem.id}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  src={encodeURI(activeItem.src)}
+                  alt={activeItem.title}
+                  onError={(e) => {
+                    e.target.src = '/services/baby-born.jpg';
+                  }}
+                  className="max-h-[75vh] max-w-full object-contain rounded-lg shadow-2xl border border-accent/30"
+                />
+
+                {/* Close Button (X) right on image top right */}
+                <button
+                  onClick={() => setSelectedItemIndex(null)}
+                  className="absolute top-3 right-3 z-30 p-2 sm:p-2.5 rounded-full bg-black/75 border border-accent/60 text-accent hover:bg-accent hover:text-paper hover:border-accent transition-all shadow-xl backdrop-blur-md group"
+                  title="Close"
+                >
+                  <X className="w-5 h-5 text-accent group-hover:text-paper transition-colors" />
+                </button>
+              </div>
 
               {/* Next Button */}
               <button
