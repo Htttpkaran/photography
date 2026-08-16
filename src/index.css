@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #261F16; /* fallback paper */
+  }
+
+  body {
+    background-color: #261F16; /* paper */
+    color: #FFFBF1; /* ink */
+    overflow-x: hidden;
+  }
+
+
+  /* Custom visible focus states */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid #EBA034; /* accent */
+    outline-offset: 4px;
+  }
+
+  /* Apply beautiful rounded corners globally */
+  img:not(.absolute) {
+    border-radius: 20px !important;
+  }
+
+  .border,
+  .rounded-box {
+    border-radius: 20px !important;
+  }
+
+  button,
+  a.px-6,
+  [type="submit"] {
+    border-radius: 9999px !important; /* Pill style for buttons */
+  }
+
+  input,
+  textarea {
+    border-radius: 8px !important;
+  }
+}
+
+/* Custom class for hides-scrollbar but keeps functionality (useful for filters/lightbox) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Globally scale up the custom 10px metadata labels */
+.text-\[10px\] {
+  font-size: 0.85rem !important; /* ~13.6px instead of 10px */
+}
+
+/* Smooth fade-in for load-more items */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeInUp {
+  animation: fadeInUp 0.5s ease both;
+}
+
+/* Marquee infinite scroll */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
+/* Vignette edge shadow effect for center focus */
+.vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.15) 20%, rgba(0, 0, 0, 0.85) 100%),
+              linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, transparent 30%, transparent 65%, rgba(0, 0, 0, 0.9) 100%);
+  z-index: 15;
+}
+
+/* Off-screen viewport rendering optimization (Load only visible parts) */
+section:not(#home) {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 750px;
+}
+
+/* Gold shimmer animation for brand text */
+@keyframes goldShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.text-gold-shimmer {
+  background: linear-gradient(110deg, #EBA034 0%, #FFF3D6 30%, #EBA034 60%, #FFF3D6 80%, #EBA034 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: goldShimmer 6s linear infinite;
+}
+
+/* Ken Burns zoom animation */
+@keyframes kenburnsZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.12); }
+}
+
+.animate-kenburns {
+  animation: kenburnsZoom 6s ease-out forwards;
+}
