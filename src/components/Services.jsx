@@ -130,9 +130,6 @@ export default function Services() {
                     {service.title}
                   </h3>
                 </div>
-                <span className="p-2 rounded-full bg-accent/10 text-accent group-hover:bg-accent group-hover:text-paper transition-colors shrink-0">
-                  <Maximize2 className="w-4 h-4" />
-                </span>
               </div>
 
               <p className="text-xs sm:text-sm text-stone font-light leading-relaxed">

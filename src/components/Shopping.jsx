@@ -197,12 +197,6 @@ export default function Shopping() {
                       {product.tag}
                     </span>
                   )}
-                  {/* Hover icon indicator */}
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span className="p-2.5 rounded-full bg-paper/20 backdrop-blur-md text-paper border border-paper/40 shadow-lg">
-                      <Maximize2 className="w-5 h-5 text-accent" />
-                    </span>
-                  </div>
                 </div>
 
                 {/* Category & Title */}
