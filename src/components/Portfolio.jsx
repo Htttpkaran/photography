@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 
 const categories = [
   'All',
@@ -298,6 +299,7 @@ const portfolioItems = [
 export default function Portfolio() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [showAll, setShowAll] = useState(false);
+  const [selectedItemIndex, setSelectedItemIndex] = useState(null);
 
   const allFiltered = activeFilter === 'All'
     ? portfolioItems
@@ -306,6 +308,18 @@ export default function Portfolio() {
   const displayedItems = activeFilter === 'All' && !showAll
     ? allFiltered.slice(0, 9)
     : allFiltered;
+
+  const activeItem = selectedItemIndex !== null ? displayedItems[selectedItemIndex] : null;
+
+  const handlePrev = (e) => {
+    e.stopPropagation();
+    setSelectedItemIndex((prev) => (prev > 0 ? prev - 1 : displayedItems.length - 1));
+  };
+
+  const handleNext = (e) => {
+    e.stopPropagation();
+    setSelectedItemIndex((prev) => (prev < displayedItems.length - 1 ? prev + 1 : 0));
+  };
 
   return (
     <section 
@@ -330,6 +344,7 @@ export default function Portfolio() {
               onClick={() => {
                 setActiveFilter(cat);
                 setShowAll(false);
+                setSelectedItemIndex(null);
               }}
               className={`text-xs uppercase tracking-widest transition-colors py-1 ${
                 activeFilter === cat ? 'text-accent border-b-2 border-accent font-medium' : 'text-stone hover:text-ink'
@@ -360,7 +375,8 @@ export default function Portfolio() {
                 initial={isNewItem ? { opacity: 0, y: 15 } : false}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35, delay: isNewItem ? Math.min((index - 9) * 0.04, 0.3) : 0 }}
-                className="relative aspect-[4/3] overflow-hidden bg-line group w-full border border-line/80 hover:border-accent transition-all duration-300 rounded-xl shadow-md"
+                onClick={() => setSelectedItemIndex(index)}
+                className="relative aspect-[4/3] overflow-hidden bg-line group w-full border border-line/80 hover:border-accent transition-all duration-300 rounded-xl shadow-md cursor-pointer"
               >
                 {/* Image */}
                 <img
@@ -377,9 +393,14 @@ export default function Portfolio() {
                 {/* Hover Caption Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5 z-10" />
                 
-                <div className="absolute bottom-4 left-4 right-4 z-20 text-left opacity-0 group-hover:opacity-100 transition-all duration-300 text-paper">
-                  <p className="font-serif text-base md:text-xl tracking-wide font-light">{item.title}</p>
-                  <p className="text-[10px] uppercase tracking-widest mt-1 text-accent font-medium">{item.location}</p>
+                <div className="absolute bottom-4 left-4 right-4 z-20 text-left opacity-0 group-hover:opacity-100 transition-all duration-300 text-paper flex items-end justify-between">
+                  <div>
+                    <p className="font-serif text-base md:text-xl tracking-wide font-light">{item.title}</p>
+                    <p className="text-[10px] uppercase tracking-widest mt-1 text-accent font-medium">{item.location}</p>
+                  </div>
+                  <span className="p-2 rounded-full bg-paper/20 backdrop-blur-md text-paper hover:bg-accent transition-colors shrink-0">
+                    <Maximize2 className="w-4 h-4" />
+                  </span>
                 </div>
               </motion.div>
             );
@@ -403,6 +424,90 @@ export default function Portfolio() {
           </button>
         </div>
       )}
+
+      {/* Fullscreen Lightbox Modal */}
+      <AnimatePresence>
+        {activeItem && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[100] flex flex-col items-center justify-between p-4 sm:p-6"
+            onClick={() => setSelectedItemIndex(null)}
+          >
+            {/* Top Header Bar */}
+            <div 
+              className="w-full max-w-5xl flex items-center justify-between z-10"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <span className="text-xs uppercase tracking-widest text-accent font-mono">
+                {activeItem.category} &middot; {selectedItemIndex + 1} of {displayedItems.length}
+              </span>
+              <button
+                onClick={() => setSelectedItemIndex(null)}
+                className="p-2 rounded-full border border-accent/40 bg-accent/10 text-accent hover:bg-accent hover:text-paper hover:border-accent transition-all shadow-md backdrop-blur-md group"
+                title="Close"
+              >
+                <X className="w-6 h-6 text-accent group-hover:text-paper transition-colors" />
+              </button>
+            </div>
+
+            {/* Main Large Image Container */}
+            <div 
+              className="relative w-full max-w-5xl flex-1 flex items-center justify-center my-2"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Prev Button */}
+              <button
+                onClick={handlePrev}
+                className="absolute left-2 sm:left-4 z-20 p-3 rounded-full bg-black/70 border border-accent/60 text-accent hover:bg-accent hover:text-paper hover:border-accent transition-all shadow-lg shadow-accent/20 backdrop-blur-md group"
+                title="Previous Image"
+              >
+                <ChevronLeft className="w-6 h-6 text-accent group-hover:text-paper transition-colors" />
+              </button>
+
+              {/* Image */}
+              <motion.img
+                key={activeItem.id}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                src={encodeURI(activeItem.src)}
+                alt={activeItem.title}
+                onError={(e) => {
+                  e.target.src = '/services/baby-born.jpg';
+                }}
+                className="max-h-[75vh] max-w-full object-contain rounded-lg shadow-2xl border border-accent/30"
+              />
+
+              {/* Next Button */}
+              <button
+                onClick={handleNext}
+                className="absolute right-2 sm:right-4 z-20 p-3 rounded-full bg-black/70 border border-accent/60 text-accent hover:bg-accent hover:text-paper hover:border-accent transition-all shadow-lg shadow-accent/20 backdrop-blur-md group"
+                title="Next Image"
+              >
+                <ChevronRight className="w-6 h-6 text-accent group-hover:text-paper transition-colors" />
+              </button>
+            </div>
+
+            {/* Bottom Caption Bar */}
+            <div 
+              className="w-full max-w-5xl text-center space-y-1 z-10"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h3 className="font-serif text-xl sm:text-2xl font-light text-paper tracking-wide">
+                {activeItem.title}
+              </h3>
+              <p className="text-xs uppercase tracking-widest text-accent font-medium">
+                {activeItem.location}
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
+

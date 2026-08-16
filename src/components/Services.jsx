@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, X, MessageCircle } from 'lucide-react';
+import { MessageCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const offerings = [
@@ -60,10 +60,10 @@ const offerings = [
 export default function Services() {
   const [showAll, setShowAll] = useState(false);
   const [activeService, setActiveService] = useState('All');
-  const [openMobileIndex, setOpenMobileIndex] = useState(null);
+  const [openCardIndex, setOpenCardIndex] = useState(null);
 
-  const toggleMobileCard = (index) => {
-    setOpenMobileIndex((prev) => (prev === index ? null : index));
+  const toggleCard = (index) => {
+    setOpenCardIndex((prev) => (prev === index ? null : index));
   };
 
   const handleToggleShowAll = () => {
@@ -83,70 +83,74 @@ export default function Services() {
   const extraOfferings = activeService === 'All' ? filteredOfferings.slice(6) : [];
 
   const renderCard = (service, index) => {
-    const isMobileOpen = openMobileIndex === index;
+    const isExpanded = openCardIndex === index;
 
     return (
       <div 
         key={`${service.title}-${index}`}
-        className={`group rounded-2xl border p-5 md:p-6 transition-all duration-300 shadow-xl overflow-hidden ${
-          isMobileOpen ? 'border-accent bg-[#2c2219]' : 'border-accent/40 bg-[#241c14] hover:border-accent'
+        className={`group rounded-2xl border p-5 md:p-6 transition-all duration-300 shadow-xl overflow-hidden flex flex-col justify-between ${
+          isExpanded 
+            ? 'border-accent bg-[#35281d] ring-1 ring-accent/40 shadow-2xl shadow-accent/10' 
+            : 'border-accent/35 bg-[#251c14] hover:border-accent hover:bg-[#2e2319] hover:shadow-2xl'
         }`}
       >
-        {/* Header: Service Title & Mobile Toggle Button */}
-        <div 
-          onClick={() => toggleMobileCard(index)}
-          className="flex items-center justify-between cursor-pointer md:cursor-default"
-        >
-          <div className="flex items-center gap-3.5">
-            <span className="font-serif text-xs text-accent font-semibold tracking-wider">
-              {String(index + 1).padStart(2, '0')}
-            </span>
-            <h3 className="font-serif text-xl sm:text-2xl text-accent font-light">
-              {service.title}
-            </h3>
-          </div>
-
-          {/* Toggle Icon Button — Visible only on Mobile (< md) */}
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleMobileCard(index);
-            }}
-            aria-label={isMobileOpen ? 'Close card' : 'Open card'}
-            className="flex md:hidden h-8 w-8 items-center justify-center rounded-full border border-line/80 text-stone transition-all duration-300 shrink-0"
-          >
-            {isMobileOpen ? (
-              <X className="h-4 w-4 text-accent" />
-            ) : (
-              <Plus className="h-4 w-4" />
-            )}
-          </button>
-        </div>
-
-        {/* Card Content Container */}
-        <div 
-          className={`grid transition-all duration-500 ease-out ${
-            isMobileOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr] md:grid-rows-[1fr]'
-          }`}
-        >
-            <div className="pt-3 space-y-3">
-              <p className="text-xs sm:text-sm text-stone font-light leading-relaxed">
-                {service.details}
-              </p>
-              <a 
-                href={`https://wa.me/919046412124?text=${encodeURIComponent(`Hi Golden Moments Photography, I want to inquire about ${service.title} service.`)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-4 py-2.5 rounded-full bg-emerald-600/15 border border-emerald-500/40 text-emerald-400 hover:bg-emerald-600 hover:text-white transition-all duration-300 shadow-sm mt-2"
-              >
-                <MessageCircle className="h-4 w-4" />
-                <span>Book on WhatsApp</span>
-              </a>
+        <div>
+          {/* Header: Service Title & Number */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3.5">
+              <span className="font-mono text-xs px-2.5 py-1 rounded-md bg-accent/15 border border-accent/30 text-accent font-semibold tracking-wider">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <h3 className="font-serif text-xl sm:text-2xl text-accent font-light group-hover:text-gold-shimmer transition-colors">
+                {service.title}
+              </h3>
             </div>
           </div>
+
+          {/* Expandable Details & Book Button (Slides down when Details button clicked) */}
+          <AnimatePresence>
+            {isExpanded && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                className="overflow-hidden"
+              >
+                <div className="pt-4 mt-3 border-t border-accent/20 space-y-4">
+                  <p className="text-xs sm:text-sm text-stone font-light leading-relaxed">
+                    {service.details}
+                  </p>
+                  <a 
+                    href={`https://wa.me/919046412124?text=${encodeURIComponent(`Hi Golden Moments Photography, I want to inquire about ${service.title} service.`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] uppercase font-semibold tracking-wider shadow-md hover:shadow-emerald-600/30 transition-all text-center"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5" /> Book on WhatsApp
+                  </a>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-      );
+
+        {/* Action Button */}
+        <div className="mt-5 pt-4 border-t border-accent/20">
+          <button
+            onClick={() => toggleCard(index)}
+            className={`w-full py-2.5 px-4 rounded-full border text-[11px] uppercase font-medium tracking-wider transition-all text-center flex items-center justify-center gap-1.5 ${
+              isExpanded 
+                ? 'border-accent bg-accent/20 text-accent font-semibold shadow-inner' 
+                : 'border-accent/40 bg-accent/10 text-stone hover:text-accent hover:border-accent hover:bg-accent/15'
+            }`}
+          >
+            <span>{isExpanded ? 'Hide Details' : 'Details'}</span>
+            {isExpanded ? <ChevronUp className="w-3.5 h-3.5 text-accent" /> : <ChevronDown className="w-3.5 h-3.5 text-accent" />}
+          </button>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -165,7 +169,6 @@ export default function Services() {
           Bespoke photography and film coverage for life's precious milestones
         </p>
       </div>
-
 
       {/* Primary Initial Services Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
@@ -203,6 +206,7 @@ export default function Services() {
     </section>
   );
 }
+
 
 
 

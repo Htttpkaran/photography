@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShoppingBag, Tag, Check, Sparkles, X, MessageCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { ShoppingBag, Check, Sparkles, MessageCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const categories = [
@@ -103,8 +103,7 @@ const products = [
 
 export default function Shopping() {
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [activeModalProduct, setActiveModalProduct] = useState(null); // Desktop modal
-  const [expandedProductId, setExpandedProductId] = useState(null); // Mobile inline expand
+  const [expandedProductId, setExpandedProductId] = useState(null);
 
   const filteredProducts = selectedCategory === 'All'
     ? products
@@ -116,14 +115,8 @@ export default function Shopping() {
     window.open(url, '_blank');
   };
 
-  const handleDetailsClick = (product) => {
-    if (window.innerWidth < 768) {
-      // Mobile: Inline card expansion
-      setExpandedProductId((prev) => (prev === product.id ? null : product.id));
-    } else {
-      // Desktop: Modal popup
-      setActiveModalProduct(product);
-    }
+  const toggleDetails = (id) => {
+    setExpandedProductId((prev) => (prev === id ? null : id));
   };
 
   return (
@@ -185,10 +178,7 @@ export default function Shopping() {
               >
                 <div>
                   {/* Product Image */}
-                  <div 
-                    className="relative aspect-square w-full overflow-hidden rounded-xl bg-line mb-4 cursor-pointer"
-                    onClick={() => handleDetailsClick(product)}
-                  >
+                  <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-line mb-4">
                     <img
                       src={encodeURI(product.image)}
                       alt={product.name}
@@ -199,7 +189,7 @@ export default function Shopping() {
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     {product.tag && (
-                      <span className="absolute top-3 left-3 rounded-md bg-accent/90 backdrop-blur-md px-2.5 py-1 text-[10px] uppercase font-semibold tracking-wider text-paper shadow-sm">
+                      <span className="absolute top-3 left-3 z-10 rounded-md bg-accent/90 backdrop-blur-md px-2.5 py-1 text-[10px] uppercase font-semibold tracking-wider text-paper shadow-sm">
                         {product.tag}
                       </span>
                     )}
@@ -209,177 +199,82 @@ export default function Shopping() {
                   <span className="text-[10px] font-mono uppercase tracking-widest text-accent">
                     {product.category}
                   </span>
-                  <h3 
-                    className="font-serif text-lg font-medium text-ink mt-1 group-hover:text-accent transition-colors cursor-pointer"
-                    onClick={() => handleDetailsClick(product)}
-                  >
+                  <h3 className="font-serif text-lg font-medium text-ink mt-1 group-hover:text-accent transition-colors">
                     {product.name}
                   </h3>
 
-                  {/* Description (short if not expanded) */}
-                  {!isExpanded && (
-                    <p className="text-xs text-stone font-light line-clamp-2 mt-1.5 leading-relaxed">
-                      {product.description}
-                    </p>
-                  )}
+                  {/* Description */}
+                  <p className="text-xs text-stone font-light line-clamp-2 mt-1.5 leading-relaxed">
+                    {product.description}
+                  </p>
 
-                  {/* Inline Expanded Details (Mobile view) */}
-                  {isExpanded && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="mt-3 pt-3 border-t border-line/60 space-y-3 text-left md:hidden"
-                    >
-                      <p className="text-xs text-stone font-light leading-relaxed">
-                        {product.description}
-                      </p>
+                  {/* Expandable Details Div (Slides down when clicked) */}
+                  <AnimatePresence>
+                    {isExpanded && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        className="overflow-hidden"
+                      >
+                        <div className="mt-3 pt-3 border-t border-line/60 space-y-3 text-left">
+                          <p className="text-[10px] uppercase tracking-widest text-accent font-semibold">
+                            Highlights &amp; Specs:
+                          </p>
+                          <ul className="space-y-1.5">
+                            {product.specs.map((spec, i) => (
+                              <li key={i} className="text-xs text-ink/90 flex items-center gap-2">
+                                <Sparkles className="w-3.5 h-3.5 text-accent shrink-0" />
+                                <span>{spec}</span>
+                              </li>
+                            ))}
+                          </ul>
 
-                      <div className="space-y-1.5 pt-1">
-                        <p className="text-[10px] uppercase tracking-widest text-stone font-semibold">
-                          Highlights &amp; Specs:
-                        </p>
-                        {product.specs.map((spec, i) => (
-                          <div key={i} className="text-xs text-ink/90 flex items-center gap-2">
-                            <Sparkles className="w-3.5 h-3.5 text-accent shrink-0" />
-                            <span>{spec}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
+                          <button
+                            onClick={() => handleWhatsAppOrder(product)}
+                            className="w-full mt-2 py-2.5 px-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] uppercase font-semibold tracking-wider flex items-center justify-center gap-1.5 shadow-md hover:shadow-emerald-600/30 transition-all"
+                          >
+                            <MessageCircle className="w-3.5 h-3.5" /> Order on WhatsApp
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
 
-                {/* Price & Actions */}
-                <div className="mt-5 pt-4 border-t border-line/60 flex flex-col space-y-3">
-                  <div className="flex items-baseline justify-between">
-                    <div className="flex items-baseline gap-2">
-                      <span className="font-serif text-xl font-semibold text-accent">
-                        {product.price}
-                      </span>
-                      {product.originalPrice && (
-                        <span className="text-xs text-stone/60 line-through">
-                          {product.originalPrice}
-                        </span>
-                      )}
-                    </div>
-                    <span className="text-[10px] text-emerald-400 font-medium uppercase tracking-wider flex items-center gap-1">
-                      <Check className="w-3 h-3" /> In Stock
+                {/* Price & Action */}
+                <div className="mt-5 pt-4 border-t border-line/60 flex items-center justify-between">
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-serif text-xl font-semibold text-accent">
+                      {product.price}
                     </span>
+                    {product.originalPrice && (
+                      <span className="text-xs text-stone/60 line-through">
+                        {product.originalPrice}
+                      </span>
+                    )}
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      onClick={() => handleDetailsClick(product)}
-                      className={`py-2.5 px-3 rounded-full border text-[11px] uppercase font-medium tracking-wider transition-all text-center flex items-center justify-center gap-1 ${
-                        isExpanded 
-                          ? 'border-accent bg-accent/15 text-accent font-semibold' 
-                          : 'border-line text-stone hover:text-ink hover:border-stone'
-                      }`}
-                    >
-                      <span>{isExpanded ? 'Hide' : 'Details'}</span>
-                      {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-                    </button>
-                    <button
-                      onClick={() => handleWhatsAppOrder(product)}
-                      className="py-2.5 px-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] uppercase font-semibold tracking-wider flex items-center justify-center gap-1 shadow-md hover:shadow-emerald-600/30 transition-all"
-                    >
-                      <MessageCircle className="w-3.5 h-3.5" /> Order
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => toggleDetails(product.id)}
+                    className={`py-2.5 px-4 rounded-full border text-[11px] uppercase font-medium tracking-wider transition-all text-center flex items-center justify-center gap-1.5 ${
+                      isExpanded 
+                        ? 'border-accent bg-accent/15 text-accent font-semibold' 
+                        : 'border-line text-stone hover:text-ink hover:border-stone'
+                    }`}
+                  >
+                    <span>{isExpanded ? 'Hide' : 'Details'}</span>
+                    {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                  </button>
                 </div>
               </div>
             );
           })}
         </motion.div>
       </AnimatePresence>
-
-      {/* Desktop Modal Product Detail Overlay (Only visible on >= 768px) */}
-      {activeModalProduct && (
-        <div 
-          id="product-modal-overlay"
-          className="fixed inset-0 bg-black/75 backdrop-blur-xl z-[100] hidden md:flex items-center justify-center p-4 sm:p-6"
-          onClick={(e) => {
-            if (e.target.id === 'product-modal-overlay') setActiveModalProduct(null);
-          }}
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-line bg-paper p-6 sm:p-8 shadow-2xl"
-          >
-            <button
-              onClick={() => setActiveModalProduct(null)}
-              className="absolute top-4 right-4 text-stone hover:text-ink p-1 transition-colors"
-            >
-              <X className="w-6 h-6" />
-            </button>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
-              <div className="aspect-square w-full overflow-hidden rounded-xl bg-line border border-line">
-                <img
-                  src={encodeURI(activeModalProduct.image)}
-                  alt={activeModalProduct.name}
-                  onError={(e) => {
-                    e.target.src = '/services/Wedding.jpg';
-                  }}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-
-              <div className="flex flex-col justify-between space-y-4 text-left">
-                <div>
-                  <span className="text-[10px] uppercase tracking-widest font-mono text-accent">
-                    {activeModalProduct.category}
-                  </span>
-                  <h3 className="font-serif text-2xl font-light text-ink mt-1">
-                    {activeModalProduct.name}
-                  </h3>
-                  <div className="flex items-baseline gap-2 mt-2">
-                    <span className="font-serif text-2xl font-semibold text-accent">
-                      {activeModalProduct.price}
-                    </span>
-                    {activeModalProduct.originalPrice && (
-                      <span className="text-xs text-stone/60 line-through">
-                        {activeModalProduct.originalPrice}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-xs text-stone leading-relaxed mt-3 font-light">
-                    {activeModalProduct.description}
-                  </p>
-
-                  <div className="mt-4 pt-3 border-t border-line/60">
-                    <p className="text-[10px] uppercase tracking-widest text-stone font-semibold mb-2">
-                      Key Highlights:
-                    </p>
-                    <ul className="space-y-1.5">
-                      {activeModalProduct.specs.map((spec, i) => (
-                        <li key={i} className="text-xs text-ink/90 flex items-center gap-2">
-                          <Sparkles className="w-3.5 h-3.5 text-accent shrink-0" />
-                          <span>{spec}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => {
-                    handleWhatsAppOrder(activeModalProduct);
-                    setActiveModalProduct(null);
-                  }}
-                  className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs uppercase tracking-widest font-semibold rounded-full flex items-center justify-center gap-2 shadow-lg transition-all"
-                >
-                  <MessageCircle className="w-4 h-4" /> Order via WhatsApp Now
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      )}
     </section>
   );
 }
+
+
