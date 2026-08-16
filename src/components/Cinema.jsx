@@ -223,7 +223,7 @@ export default function Cinema() {
       </div>
 
       {/* Video Grid */}
-      <motion.div layout className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+      <motion.div layout className="grid grid-cols-2 gap-4 sm:gap-6 md:gap-8">
         <AnimatePresence>
           {displayedVideos.map((video) => renderVideoCard(video))}
         </AnimatePresence>
