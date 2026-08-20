@@ -18,12 +18,12 @@ export default function Contact() {
       a: 'We recommend booking 3 to 6 months in advance, especially during peak wedding months in West Bengal, to ensure date availability for your event.'
     },
     {
-      q: 'Do you travel outside Ushti & Kolkata for destination shoots?',
+      q: 'Do you travel outside Usthi & Kolkata for destination shoots?',
       a: 'Yes! We travel all across West Bengal, neighboring states, and all over India for Pre-Wedding shoots and Destination Weddings.'
     },
     {
       q: 'What is the turnaround time for edited photos and full cinematic videos?',
-      a: 'Quick preview highlights are delivered within 5-7 days. Complete color-graded photos, full cinematic films, and photobooks are delivered within 3-4 weeks.'
+      a: 'Quick preview highlights are delivered within 5-7 days. Complete color-graded photos, full cinematic films, and photobooks are delivered within 3-4 months.'
     },
     {
       q: 'Can we customize our photography and videography package?',
@@ -47,8 +47,8 @@ export default function Contact() {
   };
 
   return (
-    <section 
-      id="contact" 
+    <section
+      id="contact"
       className="relative overflow-hidden py-20 md:py-28 scroll-mt-20 md:scroll-mt-24 bg-paper px-6 sm:px-8 lg:px-16 w-full mx-auto border-t border-accent/15"
     >
       {/* Section Header */}
@@ -66,7 +66,7 @@ export default function Contact() {
 
       <div className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
         {/* Left Side: Contact Information & Interactive Map */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -157,7 +157,7 @@ export default function Contact() {
         </motion.div>
 
         {/* Right Side: Form Container */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -302,7 +302,7 @@ export default function Contact() {
 
         <div className="space-y-4">
           {faqs.map((faq, idx) => (
-            <div 
+            <div
               key={idx}
               className="rounded-xl border border-line/80 bg-paper/60 p-5 backdrop-blur-sm transition-all duration-300 hover:border-accent/40"
             >

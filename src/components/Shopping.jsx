@@ -4,139 +4,99 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const categories = [
   'All',
-  'Photo Frames',
-  'Photo Books',
-  'Gift Items',
+  'Canvas & Frames',
+  'Photobooks',
+  'Presets & LUTs',
   'Gift Vouchers',
 ];
 
 const products = [
-  // --- Photo Frames ---
   {
-    id: 'frame-1',
-    name: '4x6 Size Photo Frame',
-    category: 'Photo Frames',
-    price: '₹150',
-    originalPrice: '₹250',
-    tag: 'Popular',
-    image: '/Gallery/wedding/01.webp',
-    description: 'Ultra-HD photo print mounted inside a stylish 4x6 inch tabletop or wall frame.',
-    specs: ['4x6 inch size', 'Matte / Glossy photo print', 'Sturdy wooden border', 'Desk stand & wall hook']
-  },
-  {
-    id: 'frame-2',
-    name: '4x6 Size Double Photo Frame',
-    category: 'Photo Frames',
-    price: '₹250',
-    originalPrice: '₹400',
-    tag: 'Couple Special',
-    image: '/Gallery/wedding/02.webp',
-    description: 'Elegant hinged double photo frame for displaying two cherished memories side-by-side.',
-    specs: ['4x6 inch dual slots', 'Foldable tabletop display', 'Glass protection front', 'Dual photo mount']
-  },
-  {
-    id: 'frame-3',
-    name: '8x12 Size Photo Frame',
-    category: 'Photo Frames',
-    price: '₹500',
-    originalPrice: '₹750',
+    id: 'prod-1',
+    name: 'Handcrafted Teak Frame Print',
+    category: 'Canvas & Frames',
+    price: '₹1,499',
+    originalPrice: '₹1,999',
     tag: 'Bestseller',
+    image: '/Gallery/wedding/01.webp',
+    description: 'Ultra-HD photo print mounted inside a hand-finished solid teak wood frame with anti-reflective glass.',
+    specs: ['12x18 inch size', 'Matte Silk paper 300 GSM', 'Teak wood border', 'Wall hook attached']
+  },
+  {
+    id: 'prod-2',
+    name: 'Frameless Acrylic Desk Print',
+    category: 'Canvas & Frames',
+    price: '₹2,299',
+    originalPrice: '₹2,999',
+    tag: 'Modern',
     image: '/Gallery/pre wedding/DSC_5041 copy.webp',
-    description: 'Medium luxury wall or desk photo frame crafted with anti-reflective glass and archival ink print.',
-    specs: ['8x12 inch size', '300 GSM silk paper print', 'Rich teak wood style border', 'Includes metal wall mount']
+    description: 'High-gloss acrylic glass photo panel with depth and vivid colors. Comes with solid aluminum stand legs.',
+    specs: ['8x12 inch size', '5mm clear acrylic sheet', 'UV fade-proof ink', 'Includes metal stand']
   },
   {
-    id: 'frame-4',
-    name: '12x18 Size Photo Frame',
-    category: 'Photo Frames',
-    price: '₹700',
-    originalPrice: '₹1,000',
-    tag: 'Wall Decor',
-    image: '/Gallery/wedding/03.webp',
-    description: 'Large statement wall frame ideal for living room and bedroom portrait displays.',
-    specs: ['12x18 inch size', 'Vivid fade-resistant inks', 'Premium synthetic wood frame', 'Heavy-duty wall hanging']
-  },
-
-  // --- Photo Books ---
-  {
-    id: 'book-1',
-    name: 'Mini Photo Book',
-    category: 'Photo Books',
-    price: '₹1,000',
-    originalPrice: '₹1,500',
-    tag: 'Compact Album',
-    image: '/Gallery/wedding/05.webp',
-    description: 'Handy pocket-friendly softbound mini photo album for keeping personal memories close.',
-    specs: ['Compact mini size layout', '20 thick layflat pages', 'Silk matte non-tear paper', 'Custom photo cover']
-  },
-  {
-    id: 'book-2',
-    name: '12x36 Size Luxury Photo Book',
-    category: 'Photo Books',
-    price: '₹5,000',
-    originalPrice: '₹7,500',
-    tag: 'Grand Album',
+    id: 'prod-3',
+    name: 'Royal Velvet Layflat Photobook',
+    category: 'Photobooks',
+    price: '₹8,500',
+    originalPrice: '₹10,500',
+    tag: 'Premium',
     image: '/Gallery/wedding/02.webp',
-    description: 'Grand 12x36 panorama flush mount luxury album bound in velvet with gold foil embossing.',
-    specs: ['12x36 spread layout', '40 thick layflat pages', 'Custom gold embossing', 'Velvet storage box included']
-  },
-
-  // --- Gift Items ---
-  {
-    id: 'gift-1',
-    name: 'Customized T-Shirt',
-    category: 'Gift Items',
-    price: '₹500',
-    originalPrice: '₹799',
-    tag: 'Custom Apparel',
-    image: '/Gallery/pre wedding/2.webp',
-    description: 'High-quality 100% cotton T-shirt custom printed with your portrait, graphic, or quote.',
-    specs: ['100% soft breathable cotton', 'Custom photo & text print', 'Available in sizes S - XXL', 'Fade-resistant DTF print']
+    description: '40-page flush mount luxury album bound in soft velvet cloth with custom gold foil embossing.',
+    specs: ['12x36 spread layout', '40 thick layflat pages', 'Custom gold embossing', 'Velvet storage box']
   },
   {
-    id: 'gift-2',
-    name: 'Printed Coffee Mug',
-    category: 'Gift Items',
-    price: '₹400',
-    originalPrice: '₹599',
-    tag: 'Personalized',
+    id: 'prod-4',
+    name: 'Golden Glow Lightroom Presets',
+    category: 'Presets & LUTs',
+    price: '₹499',
+    originalPrice: '₹999',
+    tag: 'Digital Pack',
     image: '/Gallery/pre wedding/1a.webp',
-    description: 'Premium 325ml ceramic mug custom printed with vibrant high-definition photos.',
-    specs: ['325ml premium ceramic', 'Microwave & dishwasher safe', 'Vivid glossy print', 'Safe box packaging']
+    description: '12 signature warm gold Lightroom color presets created specifically for Bengali wedding and outdoor portrait tones.',
+    specs: ['Desktop & Mobile compatible', 'Includes DNG & XMP files', 'Instant digital delivery', '1-Click color grading']
   },
   {
-    id: 'gift-3',
-    name: 'Metal Key Chain',
-    category: 'Gift Items',
-    price: '₹200',
-    originalPrice: '₹350',
-    tag: 'Souvenir',
-    image: '/Gallery/pre wedding/DSC_5060.webp',
-    description: 'Durable double-sided stainless steel alloy keychain with high-gloss custom photo print.',
-    specs: ['Solid metal alloy build', 'Double-sided custom print', 'Scratch-resistant coating', 'Sturdy keyring attached']
+    id: 'prod-5',
+    name: 'Cinematic Wedding LUTs Pack',
+    category: 'Presets & LUTs',
+    price: '₹799',
+    originalPrice: '₹1,499',
+    tag: 'Video LUTs',
+    image: '/services/Cinematic.jpg',
+    description: '8 Cinematic video color grading LUTs for Premiere Pro, DaVinci Resolve, Final Cut Pro & CapCut.',
+    specs: ['.cube format LUTs', 'Optimized for Sony S-Log & Flat profiles', 'Skin-tone preservation', 'Installation guide']
   },
-
-  // --- Gift Vouchers ---
   {
-    id: 'voucher-1',
+    id: 'prod-6',
     name: 'Pre-Wedding Saver Voucher',
     category: 'Gift Vouchers',
     price: '₹1,200',
     originalPrice: '₹2,000 Value',
     tag: 'Gift Voucher',
-    image: '/Gallery/pre wedding/DSC_5073.webp',
-    description: 'Gift or save ₹2,000 on any full Pre-Wedding shoot package booked with us.',
-    specs: ['Valid for 1 year from purchase', 'Transferable to friends & family', 'Digital voucher card with code']
+    image: '/Gallery/pre wedding/2.webp',
+    description: 'Gift or save ₹2,000 on any full Pre-Wedding photography package booked with Golden Moments Photography Studio.',
+    specs: ['Valid for 1 year from purchase', 'Transferable to friends & family', 'Digital voucher card with custom code']
   },
   {
-    id: 'voucher-2',
+    id: 'prod-7',
+    name: 'Gallery Wrapped Canvas (24x36)',
+    category: 'Canvas & Frames',
+    price: '₹3,999',
+    originalPrice: '₹4,999',
+    tag: 'Wall Decor',
+    image: '/Gallery/wedding/03.webp',
+    description: 'Large museum-grade cotton canvas stretched over 1.5-inch wooden gallery bars. Vibrant colors and textured feel.',
+    specs: ['24x36 inch canvas', 'Waterproof coating', 'Ready to hang', '10-Year color guarantee']
+  },
+  {
+    id: 'prod-8',
     name: 'Maternity & Newborn Gift Card',
     category: 'Gift Vouchers',
     price: '₹3,500',
     originalPrice: '₹4,500 Value',
     tag: 'Gift Voucher',
     image: '/Gallery/baby shower/01.webp',
-    description: 'Special gift card covering a complete 2-hour Maternity or Rice Ceremony session.',
+    description: 'Special gift card covering a complete 2-hour Maternity or Rice Ceremony session with 15 retouched prints.',
     specs: ['Includes studio session', '15 printed 5x7 photos', 'Digital gallery link', 'Valid for 6 months']
   }
 ];
@@ -253,28 +213,16 @@ export default function Shopping() {
                 </p>
               </div>
 
-              {/* Price & Action */}
-              <div className="mt-5 pt-4 border-t border-line/60 flex items-center justify-between">
-                <div className="flex items-baseline gap-2">
-                  <span className="font-serif text-xl font-semibold text-accent">
-                    {product.price}
+              {/* Price */}
+              <div className="mt-5 pt-4 border-t border-line/60 flex items-baseline gap-2">
+                <span className="font-serif text-xl font-semibold text-accent">
+                  {product.price}
+                </span>
+                {product.originalPrice && (
+                  <span className="text-xs text-stone/60 line-through">
+                    {product.originalPrice}
                   </span>
-                  {product.originalPrice && (
-                    <span className="text-xs text-stone/60 line-through">
-                      {product.originalPrice}
-                    </span>
-                  )}
-                </div>
-
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleWhatsAppOrder(product);
-                  }}
-                  className="py-2 px-3.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] uppercase font-semibold tracking-wider flex items-center gap-1.5 shadow-md hover:shadow-emerald-600/30 transition-all shrink-0"
-                >
-                  <MessageCircle className="w-3.5 h-3.5" /> Order
-                </button>
+                )}
               </div>
             </div>
           ))}

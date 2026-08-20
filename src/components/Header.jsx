@@ -27,11 +27,10 @@ export default function Header() {
     <>
       <header
         id="site-header"
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-          isScrolled || isMobileMenuOpen
-            ? 'bg-paper/95 backdrop-blur-md border-b border-line py-3 shadow-lg' 
-            : 'bg-gradient-to-b from-black/70 via-black/30 to-transparent py-5'
-        }`}
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled || isMobileMenuOpen
+          ? 'bg-paper/95 backdrop-blur-md border-b border-line py-3 shadow-lg'
+          : 'bg-gradient-to-b from-black/70 via-black/30 to-transparent py-5'
+          }`}
       >
         <div className="w-full px-5 sm:px-8 md:px-16 lg:px-20 flex justify-between items-center">
           {/* Logo */}
@@ -39,10 +38,10 @@ export default function Header() {
             <div className="h-9 w-9 rounded-full bg-accent/15 border border-accent/40 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-paper transition-all duration-300 shadow-md group-hover:scale-105 shrink-0">
               <Camera className="w-5 h-5 stroke-[1.75]" />
             </div>
-            <span className="font-serif text-lg sm:text-xl leading-none flex items-center gap-1.5">
+            <span className="font-serif text-lg sm:text-l leading-none flex items-center gap-1.5">
               <span className="text-gold-shimmer font-semibold">Golden</span>
               <span className="text-ink font-light">Moments</span>
-              <span className="text-accent font-semibold" >Photography</span>
+              <span className="text-ink font-light" >Photography</span>
             </span>
           </a>
 
