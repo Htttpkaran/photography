@@ -4,9 +4,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const categories = [
   'All',
-  'Wedding Teasers',
-  'Full Wedding Films',
+  'Pre-Wedding',
+  'Engagement',
+  'Mehendi & Sangeet',
+  'Wedding',
+  'Maternity & Baby Shower',
   'Rice Ceremony & Birthday',
+  'BTS & Outputs',
 ];
 
 const youtubeVideos = [
@@ -14,7 +18,7 @@ const youtubeVideos = [
     id: 'fTtsW8Ragxs',
     title: 'Rupsa Weds Krishnayan',
     subtitle: 'Bengali Wedding Cinematic Teaser',
-    category: 'Wedding Teasers',
+    category: 'Wedding',
     duration: '3:16',
     uploaded: '7 hours ago'
   },
@@ -22,7 +26,7 @@ const youtubeVideos = [
     id: 'PukkzRjg9bs',
     title: 'Payel Weds Pranoy',
     subtitle: 'Cinematic Teaser',
-    category: 'Wedding Teasers',
+    category: 'Wedding',
     duration: '2:48',
     uploaded: '1 day ago'
   },
@@ -30,7 +34,7 @@ const youtubeVideos = [
     id: 'CH_4gCHZrKQ',
     title: 'Ananya Weds Arumay',
     subtitle: 'Wedding Cinematic Teaser',
-    category: 'Wedding Teasers',
+    category: 'Wedding',
     duration: '2:53',
     uploaded: '8 days ago'
   },
@@ -38,15 +42,15 @@ const youtubeVideos = [
     id: 'V52Q0mnncCM',
     title: 'Riju Weds Riya',
     subtitle: 'Wedding Full Film',
-    category: 'Full Wedding Films',
+    category: 'Wedding',
     duration: '1:15:09',
     uploaded: '2 days ago'
   },
   {
     id: 'TDrudLkqzgc',
     title: 'Aliva Weds Sourav',
-    subtitle: 'Bengali Wedding Cinematic Teaser',
-    category: 'Wedding Teasers',
+    subtitle: 'Pre-Wedding Cinematic Highlights',
+    category: 'Pre-Wedding',
     duration: '2:45',
     uploaded: '2 weeks ago'
   },
@@ -61,18 +65,18 @@ const youtubeVideos = [
   {
     id: 'LsQOtYsx2_0',
     title: 'Namrata & Arijit',
-    subtitle: 'Wedding Full Video',
-    category: 'Full Wedding Films',
+    subtitle: 'Engagement Highlights',
+    category: 'Engagement',
     duration: '33:40',
     uploaded: '2 weeks ago'
   },
   {
     id: 'ejan_AC2h80',
     title: 'Swastika & Subham',
-    subtitle: 'Bengali Wedding Full Video',
-    category: 'Full Wedding Films',
+    subtitle: 'Mehendi & Sangeet Celebrations',
+    category: 'Mehendi & Sangeet',
     duration: '1:21:48',
-    uploaded: 'Golden Moments Photography Studio'
+    uploaded: 'Golden Moments Studio'
   },
   {
     id: 'UEMm6IX1rt0',
@@ -80,7 +84,7 @@ const youtubeVideos = [
     subtitle: 'Birthday Highlights',
     category: 'Rice Ceremony & Birthday',
     duration: '4:02',
-    uploaded: 'Golden Moments Photography Studio'
+    uploaded: 'Golden Moments Studio'
   }
 ];
 
@@ -209,7 +213,7 @@ export default function Cinema() {
             onClick={() => {
               setSelectedCategory(cat);
               setShowAll(false);
-              setInlineVideoId(null);
+              setPlayingVideoId(null);
             }}
             className={`px-4 sm:px-6 py-2 rounded-full text-xs uppercase tracking-widest transition-all duration-300 font-medium ${
               selectedCategory === cat

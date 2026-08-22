@@ -106,9 +106,6 @@ export default function Services() {
         <h2 className="font-serif text-3xl md:text-5xl font-light text-ink">
           Services We <span className="italic text-accent">Provide</span>
         </h2>
-        <p className="font-sans text-stone text-xs sm:text-sm uppercase tracking-widest font-light leading-relaxed">
-          Bespoke photography and film coverage for life's precious milestones
-        </p>
       </div>
 
       {/* Services Grid */}
