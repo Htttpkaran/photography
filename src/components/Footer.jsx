@@ -90,11 +90,11 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-paper border-t border-accent/20 pt-16 pb-8 px-6 md:px-12 lg:px-20 w-full mx-auto text-left">
+    <footer className="bg-[#140d07] border-t border-accent/20 pt-16 pb-8 px-6 md:px-12 lg:px-20 w-full mx-auto text-left">
       <div className="max-w-7xl mx-auto space-y-16">
         
         {/* Top CTA Banner */}
-        <div className="rounded-2xl border border-accent/30 bg-gradient-to-r from-accent/10 via-paper to-accent/10 p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+        <div className="rounded-2xl border border-accent/30 bg-gradient-to-r from-accent/10 via-[#1c130b] to-accent/10 p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
           <div>
             <span className="text-[10px] uppercase tracking-[0.3em] font-semibold text-accent">
               Reserve Your Dates

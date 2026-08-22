@@ -88,9 +88,6 @@ export default function Contact() {
                   <a href="tel:+919046412124" className="block text-sm sm:text-base font-medium text-ink hover:text-accent transition-colors">
                     090464 12124
                   </a>
-                  <a href="tel:+919830012345" className="block text-xs sm:text-sm text-stone hover:text-accent transition-colors">
-                    +91 98300 12345
-                  </a>
                 </div>
               </div>
             </div>
@@ -105,8 +102,8 @@ export default function Contact() {
               </span>
               <div>
                 <p className="text-[10px] uppercase tracking-widest text-stone font-semibold">Email Studio</p>
-                <a href="mailto:goldenmomentsphotography2025@gmail.com" className="mt-1 block text-xs sm:text-sm font-medium text-ink hover:text-accent transition-colors break-all">
-                  goldenmomentsphotography2025@gmail.com
+                <a href="mailto:goldenmomentsphotography2026@gmail.com" className="mt-1 block text-xs sm:text-sm font-medium text-ink hover:text-accent transition-colors break-all">
+                  goldenmomentsphotography2026@gmail.com
                 </a>
               </div>
             </div>
@@ -195,7 +192,7 @@ export default function Contact() {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="e.g. Debayan Das"
+                    placeholder=""
                     className="bg-paper/80 border border-line rounded-lg px-4 py-3 text-sm text-ink placeholder-stone/40 focus:border-accent focus:outline-none transition-colors w-full font-light"
                   />
                 </div>
@@ -212,7 +209,7 @@ export default function Contact() {
                     required
                     value={formData.contactInfo}
                     onChange={handleChange}
-                    placeholder="e.g. +91 98300 12345 or email@domain.com"
+                    placeholder=""
                     className="bg-paper/80 border border-line rounded-lg px-4 py-3 text-sm text-ink placeholder-stone/40 focus:border-accent focus:outline-none transition-colors w-full font-light"
                   />
                 </div>
