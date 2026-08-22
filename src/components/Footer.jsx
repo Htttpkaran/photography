@@ -76,8 +76,6 @@ export default function Footer() {
   const storeItems = [
     'Handcrafted Teak Frames',
     'Royal Velvet Photobooks',
-    'Golden Glow Presets',
-    'Cinematic Wedding LUTs',
     'Gift Vouchers',
   ];
 
