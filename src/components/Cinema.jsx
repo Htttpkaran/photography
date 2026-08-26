@@ -14,37 +14,38 @@ const categories = [
 ];
 
 const youtubeVideos = [
+  // Pre-Wedding Videos
   {
-    id: 'fTtsW8Ragxs',
-    title: 'Rupsa Weds Krishnayan',
-    subtitle: 'Bengali Wedding Cinematic Teaser',
-    category: 'Wedding',
-    duration: '3:16',
-    uploaded: '7 hours ago'
+    id: 'qEXx0SnzOSo',
+    title: 'Pre-Wedding Story',
+    subtitle: 'Cinematic Pre-Wedding Film',
+    category: 'Pre-Wedding',
+    duration: 'Cinematic',
+    uploaded: 'Golden Moments Studio'
   },
   {
-    id: 'PukkzRjg9bs',
-    title: 'Payel Weds Pranoy',
+    id: '_RjpzHJCf9Y',
+    title: 'Romantic Moments',
+    subtitle: 'Pre-Wedding Teaser',
+    category: 'Pre-Wedding',
+    duration: 'Cinematic',
+    uploaded: 'Golden Moments Studio'
+  },
+  {
+    id: 'fiNuPmLxHQE',
+    title: 'Golden Love Story',
+    subtitle: 'Pre-Wedding Highlights',
+    category: 'Pre-Wedding',
+    duration: 'Cinematic',
+    uploaded: 'Golden Moments Studio'
+  },
+  {
+    id: 'QeEnnqHWu7Y',
+    title: 'Pre-Wedding Memories',
     subtitle: 'Cinematic Teaser',
-    category: 'Wedding',
-    duration: '2:48',
-    uploaded: '1 day ago'
-  },
-  {
-    id: 'CH_4gCHZrKQ',
-    title: 'Ananya Weds Arumay',
-    subtitle: 'Wedding Cinematic Teaser',
-    category: 'Wedding',
-    duration: '2:53',
-    uploaded: '8 days ago'
-  },
-  {
-    id: 'V52Q0mnncCM',
-    title: 'Riju Weds Riya',
-    subtitle: 'Wedding Full Film',
-    category: 'Wedding',
-    duration: '1:15:09',
-    uploaded: '2 days ago'
+    category: 'Pre-Wedding',
+    duration: 'Cinematic',
+    uploaded: 'Golden Moments Studio'
   },
   {
     id: 'TDrudLkqzgc',
@@ -52,7 +53,25 @@ const youtubeVideos = [
     subtitle: 'Pre-Wedding Cinematic Highlights',
     category: 'Pre-Wedding',
     duration: '2:45',
-    uploaded: '2 weeks ago'
+    uploaded: 'Golden Moments Studio'
+  },
+
+  // Birthday & Rice Ceremony Videos
+  {
+    id: 'UzhxJXysEHA',
+    title: 'Birthday Celebration',
+    subtitle: 'Birthday Highlights',
+    category: 'Rice Ceremony & Birthday',
+    duration: 'Highlights',
+    uploaded: 'Golden Moments Studio'
+  },
+  {
+    id: 'WgdSLyynCVA',
+    title: 'Grand Birthday Party',
+    subtitle: 'Special Birthday Film',
+    category: 'Rice Ceremony & Birthday',
+    duration: 'Highlights',
+    uploaded: 'Golden Moments Studio'
   },
   {
     id: 'ch3gIVIhbx0',
@@ -60,22 +79,6 @@ const youtubeVideos = [
     subtitle: 'Rice Ceremony Cinematic Teaser',
     category: 'Rice Ceremony & Birthday',
     duration: '2:47',
-    uploaded: '2 weeks ago'
-  },
-  {
-    id: 'LsQOtYsx2_0',
-    title: 'Namrata & Arijit',
-    subtitle: 'Engagement Highlights',
-    category: 'Engagement',
-    duration: '33:40',
-    uploaded: '2 weeks ago'
-  },
-  {
-    id: 'ejan_AC2h80',
-    title: 'Swastika & Subham',
-    subtitle: 'Mehendi & Sangeet Celebrations',
-    category: 'Mehendi & Sangeet',
-    duration: '1:21:48',
     uploaded: 'Golden Moments Studio'
   },
   {
@@ -84,6 +87,56 @@ const youtubeVideos = [
     subtitle: 'Birthday Highlights',
     category: 'Rice Ceremony & Birthday',
     duration: '4:02',
+    uploaded: 'Golden Moments Studio'
+  },
+
+  // Wedding & Other Videos
+  {
+    id: 'fTtsW8Ragxs',
+    title: 'Rupsa Weds Krishnayan',
+    subtitle: 'Bengali Wedding Cinematic Teaser',
+    category: 'Wedding',
+    duration: '3:16',
+    uploaded: 'Golden Moments Studio'
+  },
+  {
+    id: 'PukkzRjg9bs',
+    title: 'Payel Weds Pranoy',
+    subtitle: 'Cinematic Teaser',
+    category: 'Wedding',
+    duration: '2:48',
+    uploaded: 'Golden Moments Studio'
+  },
+  {
+    id: 'CH_4gCHZrKQ',
+    title: 'Ananya Weds Arumay',
+    subtitle: 'Wedding Cinematic Teaser',
+    category: 'Wedding',
+    duration: '2:53',
+    uploaded: 'Golden Moments Studio'
+  },
+  {
+    id: 'V52Q0mnncCM',
+    title: 'Riju Weds Riya',
+    subtitle: 'Wedding Full Film',
+    category: 'Wedding',
+    duration: '1:15:09',
+    uploaded: 'Golden Moments Studio'
+  },
+  {
+    id: 'LsQOtYsx2_0',
+    title: 'Namrata & Arijit',
+    subtitle: 'Engagement Highlights',
+    category: 'Engagement',
+    duration: '33:40',
+    uploaded: 'Golden Moments Studio'
+  },
+  {
+    id: 'ejan_AC2h80',
+    title: 'Swastika & Subham',
+    subtitle: 'Mehendi & Sangeet Celebrations',
+    category: 'Mehendi & Sangeet',
+    duration: '1:21:48',
     uploaded: 'Golden Moments Studio'
   }
 ];
@@ -227,11 +280,30 @@ export default function Cinema() {
       </div>
 
       {/* Video Grid */}
-      <motion.div layout className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
-        <AnimatePresence>
-          {displayedVideos.map((video) => renderVideoCard(video))}
-        </AnimatePresence>
-      </motion.div>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={selectedCategory}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -15 }}
+          transition={{ duration: 0.25, ease: 'easeInOut' }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 min-h-[220px]"
+        >
+          {displayedVideos.length > 0 ? (
+            displayedVideos.map((video) => renderVideoCard(video))
+          ) : (
+            <div className="col-span-full flex flex-col items-center justify-center py-16 text-center border border-dashed border-accent/30 rounded-2xl bg-paper/40">
+              <Sparkles className="w-8 h-8 text-accent/60 mb-3 animate-pulse" />
+              <p className="font-serif text-lg text-ink font-light">
+                Videos coming soon for <span className="text-accent">{selectedCategory}</span>
+              </p>
+              <p className="text-xs text-stone font-light mt-1">
+                Check back shortly or visit our YouTube channel for updates.
+              </p>
+            </div>
+          )}
+        </motion.div>
+      </AnimatePresence>
 
       {/* Load More & YouTube Button */}
       <div className="flex justify-center items-center gap-4 mt-12 flex-wrap">

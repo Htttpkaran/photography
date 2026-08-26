@@ -2,40 +2,43 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-const heroImages = [
-  '/hero/h01.webp',
-  '/hero/h02.webp',
-  '/hero/h03.webp',
-  '/hero/h04.webp',
-  '/hero/h05.webp',
-  '/hero/h06.webp',
+const heroItems = [
+  '/hero/1.webp',
+  '/hero/2.webp',
+  '/hero/3.webp',
+  '/hero/4.webp',
+  '/hero/5.m4v',
+  '/hero/6.webp',
+  '/hero/7.webp',
 ];
 
 export default function Hero() {
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
 
-  // Preload all hero images so click transitions are instant and smooth
+  // Preload hero images so click transitions are instant and smooth
   useEffect(() => {
-    heroImages.forEach((src) => {
-      const img = new Image();
-      img.src = src;
+    heroItems.forEach((src) => {
+      if (!src.endsWith('.m4v') && !src.endsWith('.mp4')) {
+        const img = new Image();
+        img.src = src;
+      }
     });
   }, []);
 
   // Auto-slide every 5 seconds, resetting interval when user manually clicks
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIdx((prev) => (prev + 1) % heroImages.length);
+      setCurrentImageIdx((prev) => (prev + 1) % heroItems.length);
     }, 5000);
     return () => clearInterval(interval);
   }, [currentImageIdx]);
 
   const handlePrev = () => {
-    setCurrentImageIdx((prev) => (prev - 1 + heroImages.length) % heroImages.length);
+    setCurrentImageIdx((prev) => (prev - 1 + heroItems.length) % heroItems.length);
   };
 
   const handleNext = () => {
-    setCurrentImageIdx((prev) => (prev + 1) % heroImages.length);
+    setCurrentImageIdx((prev) => (prev + 1) % heroItems.length);
   };
 
   const containerVariants = {
@@ -66,18 +69,33 @@ export default function Hero() {
       id="home"
       className="vignette relative min-h-screen w-full flex items-end justify-center bg-paper select-none overflow-hidden"
     >
-      {/* Background Image Slider with smooth 700ms crossfade + Ken Burns zoom-in */}
+      {/* Background Media Slider with smooth 700ms crossfade + Ken Burns zoom-in */}
       <div className="absolute inset-0 z-0 overflow-hidden bg-black">
-        {heroImages.map((src, index) => (
-          <img
-            key={`${src}-${index === currentImageIdx ? 'active' : 'idle'}`}
-            src={src}
-            alt={`Hero Background ${index + 1}`}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out filter brightness-[0.9] contrast-[0.98] ${
-              index === currentImageIdx ? 'opacity-100 z-10 animate-kenburns' : 'opacity-0 z-0 pointer-events-none'
-            }`}
-          />
-        ))}
+        {heroItems.map((src, index) => {
+          const isVideo = src.endsWith('.m4v') || src.endsWith('.mp4');
+          return isVideo ? (
+            <video
+              key={`${src}-${index === currentImageIdx ? 'active' : 'idle'}`}
+              src={src}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out filter brightness-[0.9] contrast-[0.98] ${
+                index === currentImageIdx ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+              }`}
+            />
+          ) : (
+            <img
+              key={`${src}-${index === currentImageIdx ? 'active' : 'idle'}`}
+              src={src}
+              alt={`Hero Background ${index + 1}`}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out filter brightness-[0.9] contrast-[0.98] ${
+                index === currentImageIdx ? 'opacity-100 z-10 animate-kenburns' : 'opacity-0 z-0 pointer-events-none'
+              }`}
+            />
+          );
+        })}
       </div>
 
       {/* Navigation Arrow Buttons */}

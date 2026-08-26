@@ -86,7 +86,7 @@ export default function Contact() {
                 <p className="text-[10px] uppercase tracking-widest text-stone font-semibold">Direct Calls</p>
                 <div className="mt-1 space-y-0.5">
                   <a href="tel:+919046412124" className="block text-sm sm:text-base font-medium text-ink hover:text-accent transition-colors">
-                    090464 12124
+                    +91-90464 12124
                   </a>
                 </div>
               </div>

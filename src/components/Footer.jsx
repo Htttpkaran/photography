@@ -110,7 +110,7 @@ export default function Footer() {
               href="tel:+919046412124"
               className="px-5 py-3 rounded-full border border-accent/50 text-accent hover:bg-accent hover:text-paper text-xs font-semibold uppercase tracking-widest transition-all duration-300 flex items-center gap-2"
             >
-              <Phone className="w-4 h-4" /> Call 090464 12124
+              <Phone className="w-4 h-4" /> Call +91-90464 12124
             </a>
             <a
               href="https://wa.me/919046412124"
@@ -153,12 +153,12 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-accent shrink-0" />
-                <a href="tel:+919046412124" className="hover:text-accent transition-colors">090464 12124 / +91 98300 12345</a>
+                <a href="tel:+919046412124" className="hover:text-accent transition-colors">+91-90464 12124</a>
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-accent shrink-0" />
-                <a href="mailto:goldenmomentsphotography2025@gmail.com" className="hover:text-accent transition-colors break-all">
-                  goldenmomentsphotography2025@gmail.com
+                <a href="mailto:goldenmomentsphotography2026@gmail.com" className="hover:text-accent transition-colors break-all">
+                  goldenmomentsphotography2026@gmail.com
                 </a>
               </div>
               <div className="flex items-center gap-2.5">
