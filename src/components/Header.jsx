@@ -66,7 +66,7 @@ export default function Header() {
               className="hidden sm:flex items-center gap-2 rounded-full border border-accent/50 px-4 py-2 text-xs uppercase tracking-widest text-accent transition-all duration-300 hover:bg-accent hover:text-paper hover:shadow-[0_0_20px_rgba(235,160,52,0.35)]"
             >
               <Phone width={14} height={14} />
-              <span>090464 12124</span>
+              <span>+91-90464 12124</span>
             </a>
 
             {/* Mobile Menu Toggle Button */}
