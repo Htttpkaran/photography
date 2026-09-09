@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 
@@ -51,246 +52,305 @@ const portfolioItems = [
   {
     id: 6,
     category: 'Wedding',
-    title: 'Shubho Drishti',
-    location: 'Wedding Rituals',
+    title: 'Warm Smiles & Heritage',
+    location: 'Classic Reception',
     src: '/Gallery/wedding/06.webp',
   },
   {
     id: 7,
     category: 'Wedding',
-    title: 'Vidaai Tears & Joy',
-    location: 'Home Ceremony',
+    title: 'Divine Grace',
+    location: 'Traditional Rituals',
     src: '/Gallery/wedding/07.webp',
   },
   {
     id: 8,
     category: 'Wedding',
-    title: 'Seven Sacred Vows',
-    location: 'West Bengal',
+    title: 'Royal Heritage Frame',
+    location: 'Palace Wedding',
     src: '/Gallery/wedding/08.webp',
   },
   {
     id: 9,
     category: 'Wedding',
-    title: 'Celebration of Love',
-    location: 'Wedding Highlights',
+    title: 'The Golden Promise',
+    location: 'Golden Moments Studio',
     src: '/Gallery/wedding/09.webp',
   },
-
-  // Pre Wedding
   {
     id: 10,
-    category: 'Pre Wedding',
-    title: 'Romantic Sunset',
-    location: 'Outdoor Location',
-    src: '/Gallery/pre wedding/2.webp',
+    category: 'Wedding',
+    title: 'Ceremonial Elegance',
+    location: 'Bengal Tradition',
+    src: '/Gallery/wedding/10.webp',
   },
   {
     id: 11,
-    category: 'Pre Wedding',
-    title: 'Riverfront Melodies',
-    location: 'Riverside Shoot',
-    src: '/Gallery/pre wedding/1a.webp',
+    category: 'Wedding',
+    title: 'Forever Together',
+    location: 'Kolkata Mandap',
+    src: '/Gallery/wedding/11.webp',
   },
   {
     id: 12,
-    category: 'Pre Wedding',
-    title: 'Walk in the Woods',
-    location: 'Nature Trail',
-    src: '/Gallery/pre wedding/DSC_5041 copy.webp',
+    category: 'Wedding',
+    title: 'Celebration of Joy',
+    location: 'Grand Reception',
+    src: '/Gallery/wedding/12.webp',
   },
+  // Pre Wedding
   {
     id: 13,
     category: 'Pre Wedding',
-    title: 'Together Forever',
-    location: 'Scenic Outdoor',
-    src: '/Gallery/pre wedding/DSC_5054.webp',
+    title: 'Sunset Whispers',
+    location: 'Riverside Romance',
+    src: '/Gallery/pre wedding/1a.webp',
   },
   {
     id: 14,
     category: 'Pre Wedding',
-    title: 'Cinematic Glow',
-    location: 'Pre-Wedding Shoot',
-    src: '/Gallery/pre wedding/DSC_5060.webp',
+    title: 'Shadows & Sunlight',
+    location: 'Heritage Ruins',
+    src: '/Gallery/pre wedding/2.webp',
   },
   {
     id: 15,
     category: 'Pre Wedding',
-    title: 'Whispers of Love',
-    location: 'Golden Hour',
-    src: '/Gallery/pre wedding/DSC_5073.webp',
+    title: 'Romantic Stroll',
+    location: 'Botanical Garden',
+    src: '/Gallery/pre wedding/3.webp',
   },
   {
     id: 16,
     category: 'Pre Wedding',
-    title: 'Hand in Hand',
-    location: 'Location Shoot',
-    src: '/Gallery/pre wedding/DSC_5077 copy.webp',
+    title: 'Golden Hour Embrace',
+    location: 'Lakeside Bliss',
+    src: '/Gallery/pre wedding/4.webp',
   },
   {
     id: 17,
     category: 'Pre Wedding',
-    title: 'Golden Moments Photography',
-    location: 'Outdoor Portraits',
-    src: '/Gallery/pre wedding/DSC_5086 copy.webp',
+    title: 'Cinematic Gazes',
+    location: 'Vintage Alley',
+    src: '/Gallery/pre wedding/5.webp',
   },
   {
     id: 18,
     category: 'Pre Wedding',
-    title: 'Love & Reflections',
-    location: 'Park Session',
-    src: '/Gallery/pre wedding/DSC_5235.webp',
+    title: 'Timeless Connection',
+    location: 'Maidan Kolkata',
+    src: '/Gallery/pre wedding/6.webp',
   },
-
-  // Baby Shower
   {
     id: 19,
-    category: 'Baby Shower',
-    title: 'Blessings & Joy',
-    location: 'Sadh Bhakshan',
-    src: '/Gallery/baby shower/001.webp',
+    category: 'Pre Wedding',
+    title: 'Hand in Hand',
+    location: 'Howrah Promenade',
+    src: '/Gallery/pre wedding/DSC_5041 copy.webp',
   },
   {
     id: 20,
-    category: 'Baby Shower',
-    title: 'Motherhood Glow',
-    location: 'Family Celebration',
-    src: '/Gallery/baby shower/01.webp',
+    category: 'Pre Wedding',
+    title: 'Monochrome Passion',
+    location: 'Golden Studio',
+    src: '/Gallery/pre wedding/MON_5694 copy.webp',
   },
   {
     id: 21,
-    category: 'Baby Shower',
-    title: 'Sacred Rituals',
-    location: 'Home Ceremony',
-    src: '/Gallery/baby shower/02.webp',
+    category: 'Pre Wedding',
+    title: 'Subtle Spark',
+    location: 'Eco Park',
+    src: '/Gallery/pre wedding/MON_5699 copy.webp',
   },
   {
     id: 22,
-    category: 'Baby Shower',
-    title: 'Warm Wishes',
-    location: 'Traditional Celebration',
-    src: '/Gallery/baby shower/03.webp',
+    category: 'Pre Wedding',
+    title: 'Love & Laughter',
+    location: 'Princep Ghat',
+    src: '/Gallery/pre wedding/MON_5700 copy.webp',
   },
   {
     id: 23,
-    category: 'Baby Shower',
-    title: 'Family Embrace',
-    location: 'Baby Shower Session',
-    src: '/Gallery/baby shower/13.webp',
+    category: 'Pre Wedding',
+    title: 'Fairytale Moment',
+    location: 'Palace Grounds',
+    src: '/Gallery/pre wedding/MON_5702 copy.webp',
   },
   {
     id: 24,
-    category: 'Baby Shower',
-    title: 'Cherished Moments',
-    location: 'Ushti Studio',
-    src: '/Gallery/baby shower/20.webp',
+    category: 'Pre Wedding',
+    title: 'Endless Horizons',
+    location: 'Ganga Ghat',
+    src: '/Gallery/pre wedding/MON_5704 copy.webp',
   },
-
-  // Rice Ceremony
+  // Baby Shower
   {
     id: 25,
-    category: 'Rice Ceremony',
-    title: 'Mukhe Bhat Ritual',
-    location: 'First Rice Ceremony',
-    src: '/Gallery/rice ceremony/00 copy.webp',
+    category: 'Baby Shower',
+    title: 'Maternal Glow',
+    location: 'Sadh Ceremony',
+    src: '/Gallery/baby shower/01.webp',
   },
   {
     id: 26,
-    category: 'Rice Ceremony',
-    title: 'First Taste of Feast',
-    location: 'Grand Rituals',
-    src: '/Gallery/rice ceremony/001.webp',
+    category: 'Baby Shower',
+    title: 'Awaiting the Miracle',
+    location: 'Family Blessings',
+    src: '/Gallery/baby shower/02.webp',
   },
   {
     id: 27,
-    category: 'Rice Ceremony',
-    title: 'Little Prince',
-    location: 'Rice Ceremony',
-    src: '/Gallery/rice ceremony/003.webp',
+    category: 'Baby Shower',
+    title: 'Blissful Smiles',
+    location: 'Home Celebration',
+    src: '/Gallery/baby shower/03.webp',
   },
   {
     id: 28,
-    category: 'Rice Ceremony',
-    title: 'Family Blessings',
-    location: 'Traditional Event',
-    src: '/Gallery/rice ceremony/004.webp',
+    category: 'Baby Shower',
+    title: 'Traditional Sadh Feast',
+    location: 'Ancestral Home',
+    src: '/Gallery/baby shower/04.webp',
   },
   {
     id: 29,
-    category: 'Rice Ceremony',
-    title: 'Golden Smirks',
-    location: 'Ushti Studio',
-    src: '/Gallery/rice ceremony/006.webp',
+    category: 'Baby Shower',
+    title: 'Radiant Motherhood',
+    location: 'Studio Session',
+    src: '/Gallery/baby shower/05.webp',
   },
   {
     id: 30,
-    category: 'Rice Ceremony',
-    title: 'Precious Smile',
-    location: 'Family Celebration',
-    src: '/Gallery/rice ceremony/007.webp',
+    category: 'Baby Shower',
+    title: 'Shower of Blessings',
+    location: 'Kolkata Rituals',
+    src: '/Gallery/baby shower/06.webp',
   },
-
-  // Birthday
   {
     id: 31,
-    category: 'Birthday',
-    title: '1st Birthday Magic',
-    location: 'Party Celebration',
-    src: '/Gallery/birthday/1.webp',
+    category: 'Baby Shower',
+    title: 'Warm Family Hugs',
+    location: 'Golden Moments Studio',
+    src: '/Gallery/baby shower/07.webp',
   },
   {
     id: 32,
-    category: 'Birthday',
-    title: 'Cake Smash Fun',
-    location: 'Birthday Session',
-    src: '/Gallery/birthday/2a.webp',
+    category: 'Baby Shower',
+    title: 'Sweet Expectations',
+    location: 'Flower Decoration',
+    src: '/Gallery/baby shower/08.webp',
   },
+  // Rice Ceremony
   {
     id: 33,
-    category: 'Birthday',
-    title: 'Little Star',
-    location: 'Birthday Party',
-    src: '/Gallery/birthday/3.webp',
+    category: 'Rice Ceremony',
+    title: 'First Solid Bite',
+    location: 'Mukhe Bhaat',
+    src: '/Gallery/rice ceremony/01.webp',
   },
   {
     id: 34,
-    category: 'Birthday',
-    title: 'Joy & Balloons',
-    location: 'Festive Celebration',
-    src: '/Gallery/birthday/4.webp',
+    category: 'Rice Ceremony',
+    title: 'Little Prince Attire',
+    location: 'Annaprashan',
+    src: '/Gallery/rice ceremony/02.webp',
   },
   {
     id: 35,
-    category: 'Birthday',
-    title: 'Golden Childhood',
-    location: 'Birthday Shoot',
-    src: '/Gallery/birthday/MON_5247.webp',
+    category: 'Rice Ceremony',
+    title: 'Grandparents Blessings',
+    location: 'Heritage House',
+    src: '/Gallery/rice ceremony/03.webp',
   },
   {
     id: 36,
-    category: 'Birthday',
-    title: 'Birthday Smiles',
-    location: 'Ushti Studio',
-    src: '/Gallery/birthday/MON_5661 copy 2a.webp',
+    category: 'Rice Ceremony',
+    title: 'Curious Eyes & Rice Bowl',
+    location: 'Bengali Tradition',
+    src: '/Gallery/rice ceremony/04.webp',
   },
   {
     id: 37,
-    category: 'Birthday',
-    title: 'Warm Memories',
-    location: 'Party Session',
-    src: '/Gallery/birthday/MON_5741 copy 1.webp',
+    category: 'Rice Ceremony',
+    title: 'Joyful Family Gathers',
+    location: 'Home Ritual',
+    src: '/Gallery/rice ceremony/05.webp',
   },
   {
     id: 38,
-    category: 'Birthday',
-    title: 'Family Celebrations',
-    location: 'West Bengal',
-    src: '/Gallery/birthday/MON_5770 copy.webp',
+    category: 'Rice Ceremony',
+    title: 'Tiny Dhoti Elegance',
+    location: 'Golden Moments Studio',
+    src: '/Gallery/rice ceremony/06.webp',
   },
   {
     id: 39,
+    category: 'Rice Ceremony',
+    title: 'Sacred Fire Blessings',
+    location: 'Puja Mandap',
+    src: '/Gallery/rice ceremony/07.webp',
+  },
+  {
+    id: 40,
+    category: 'Rice Ceremony',
+    title: 'Celebration of Life',
+    location: 'Banquet Hall',
+    src: '/Gallery/rice ceremony/08.webp',
+  },
+  // Birthday
+  {
+    id: 41,
     category: 'Birthday',
-    title: 'Grand Birthday Party',
+    title: 'First Cake Smash',
+    location: '1st Birthday Bash',
+    src: '/Gallery/birthday/01.webp',
+  },
+  {
+    id: 42,
+    category: 'Birthday',
+    title: 'Balloons & Smiles',
+    location: 'Themed Party',
+    src: '/Gallery/birthday/02.webp',
+  },
+  {
+    id: 43,
+    category: 'Birthday',
+    title: 'Little Princess Celebration',
+    location: 'Kolkata',
+    src: '/Gallery/birthday/03.webp',
+  },
+  {
+    id: 44,
+    category: 'Birthday',
+    title: 'Candle Blowing Magic',
+    location: 'Family Banquet',
+    src: '/Gallery/birthday/04.webp',
+  },
+  {
+    id: 45,
+    category: 'Birthday',
+    title: 'Playful Laughter',
+    location: 'Golden Studio',
+    src: '/Gallery/birthday/05.webp',
+  },
+  {
+    id: 46,
+    category: 'Birthday',
+    title: 'Confetti Rain',
+    location: 'Outdoor Bash',
+    src: '/Gallery/birthday/06.webp',
+  },
+  {
+    id: 47,
+    category: 'Birthday',
+    title: 'Superhero Fun',
+    location: 'Party Zone',
+    src: '/Gallery/birthday/07.webp',
+  },
+  {
+    id: 48,
+    category: 'Birthday',
+    title: 'Pure Innocence',
     location: 'Golden Moments Photography',
     src: '/Gallery/birthday/MON_5793 copy.webp',
   },
@@ -300,17 +360,6 @@ export default function Portfolio() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [showAll, setShowAll] = useState(false);
   const [selectedItemIndex, setSelectedItemIndex] = useState(null);
-
-  useEffect(() => {
-    if (selectedItemIndex !== null) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [selectedItemIndex]);
 
   const allFiltered = activeFilter === 'All'
     ? portfolioItems
@@ -437,88 +486,90 @@ export default function Portfolio() {
       )}
 
       {/* Fullscreen Lightbox Modal */}
-      <AnimatePresence>
-        {activeItem && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[100] flex flex-col items-center justify-between p-4 sm:p-6"
-            onClick={() => setSelectedItemIndex(null)}
-          >
-            {/* Top Header Bar */}
-            <div 
-              className="w-full max-w-5xl flex items-center justify-between z-10"
-              onClick={(e) => e.stopPropagation()}
+      {typeof document !== 'undefined' && createPortal(
+        <AnimatePresence>
+          {activeItem && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[100] flex flex-col items-center justify-between p-4 sm:p-6"
+              onClick={() => setSelectedItemIndex(null)}
             >
-              <span className="text-xs uppercase tracking-widest text-accent font-mono">
-                {activeItem.category} &middot; {selectedItemIndex + 1} of {displayedItems.length}
-              </span>
-              <button
-                onClick={() => setSelectedItemIndex(null)}
-                className="p-2 rounded-full border border-accent/40 bg-accent/10 text-accent hover:bg-accent hover:text-paper hover:border-accent transition-all shadow-md backdrop-blur-md group"
-                title="Close"
+              {/* Top Header Bar */}
+              <div 
+                className="w-full max-w-5xl flex items-center justify-between z-10"
+                onClick={(e) => e.stopPropagation()}
               >
-                <X className="w-6 h-6 text-accent group-hover:text-paper transition-colors" />
-              </button>
-            </div>
+                <span className="text-xs uppercase tracking-widest text-accent font-mono">
+                  {activeItem.category} &middot; {selectedItemIndex + 1} of {displayedItems.length}
+                </span>
+                <button
+                  onClick={() => setSelectedItemIndex(null)}
+                  className="p-2 rounded-full border border-accent/40 bg-accent/10 text-accent hover:bg-accent hover:text-paper hover:border-accent transition-all shadow-md backdrop-blur-md group"
+                  title="Close"
+                >
+                  <X className="w-6 h-6 text-accent group-hover:text-paper transition-colors" />
+                </button>
+              </div>
 
-            {/* Main Large Image Container */}
-            <div 
-              className="relative w-full max-w-5xl flex-1 flex items-center justify-center my-2"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Prev Button */}
-              <button
-                onClick={handlePrev}
-                className="absolute left-2 sm:left-4 z-20 p-3 rounded-full bg-black/70 border border-accent/60 text-accent hover:bg-accent hover:text-paper hover:border-accent transition-all shadow-lg shadow-accent/20 backdrop-blur-md group"
-                title="Previous Image"
+              {/* Main Large Image Container */}
+              <div 
+                className="relative w-full max-w-5xl flex-1 flex items-center justify-center my-2"
+                onClick={(e) => e.stopPropagation()}
               >
-                <ChevronLeft className="w-6 h-6 text-accent group-hover:text-paper transition-colors" />
-              </button>
+                {/* Prev Button */}
+                <button
+                  onClick={handlePrev}
+                  className="absolute left-2 sm:left-4 z-20 p-3 rounded-full bg-black/70 border border-accent/60 text-accent hover:bg-accent hover:text-paper hover:border-accent transition-all shadow-lg shadow-accent/20 backdrop-blur-md group"
+                  title="Previous Image"
+                >
+                  <ChevronLeft className="w-6 h-6 text-accent group-hover:text-paper transition-colors" />
+                </button>
 
-              {/* Image */}
-              <motion.img
-                key={activeItem.id}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-                src={encodeURI(activeItem.src)}
-                alt={activeItem.title}
-                onError={(e) => {
-                  e.target.src = '/services/baby-born.jpg';
-                }}
-                className="max-h-[75vh] max-w-full object-contain rounded-lg shadow-2xl border border-accent/30"
-              />
+                {/* Image */}
+                <motion.img
+                  key={activeItem.id}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  src={encodeURI(activeItem.src)}
+                  alt={activeItem.title}
+                  onError={(e) => {
+                    e.target.src = '/services/baby-born.jpg';
+                  }}
+                  className="max-h-[75vh] max-w-full object-contain rounded-lg shadow-2xl border border-accent/30"
+                />
 
-              {/* Next Button */}
-              <button
-                onClick={handleNext}
-                className="absolute right-2 sm:right-4 z-20 p-3 rounded-full bg-black/70 border border-accent/60 text-accent hover:bg-accent hover:text-paper hover:border-accent transition-all shadow-lg shadow-accent/20 backdrop-blur-md group"
-                title="Next Image"
+                {/* Next Button */}
+                <button
+                  onClick={handleNext}
+                  className="absolute right-2 sm:right-4 z-20 p-3 rounded-full bg-black/70 border border-accent/60 text-accent hover:bg-accent hover:text-paper hover:border-accent transition-all shadow-lg shadow-accent/20 backdrop-blur-md group"
+                  title="Next Image"
+                >
+                  <ChevronRight className="w-6 h-6 text-accent group-hover:text-paper transition-colors" />
+                </button>
+              </div>
+
+              {/* Bottom Caption Bar */}
+              <div 
+                className="w-full max-w-5xl text-center space-y-1 z-10"
+                onClick={(e) => e.stopPropagation()}
               >
-                <ChevronRight className="w-6 h-6 text-accent group-hover:text-paper transition-colors" />
-              </button>
-            </div>
-
-            {/* Bottom Caption Bar */}
-            <div 
-              className="w-full max-w-5xl text-center space-y-1 z-10"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <h3 className="font-serif text-xl sm:text-2xl font-light text-paper tracking-wide">
-                {activeItem.title}
-              </h3>
-              <p className="text-xs uppercase tracking-widest text-accent font-medium">
-                {activeItem.location}
-              </p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                <h3 className="font-serif text-xl sm:text-2xl font-light text-paper tracking-wide">
+                  {activeItem.title}
+                </h3>
+                <p className="text-xs uppercase tracking-widest text-accent font-medium">
+                  {activeItem.location}
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </section>
   );
 }
-

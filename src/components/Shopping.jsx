@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { ShoppingBag, Sparkles, MessageCircle, X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
+import { ShoppingBag, Sparkles, MessageCircle, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const categories = [
@@ -117,17 +118,6 @@ const products = [
 export default function Shopping() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedProductIndex, setSelectedProductIndex] = useState(null);
-
-  useEffect(() => {
-    if (selectedProductIndex !== null) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [selectedProductIndex]);
 
   const filteredProducts = selectedCategory === 'All'
     ? products
@@ -265,117 +255,122 @@ export default function Shopping() {
       </AnimatePresence>
 
       {/* Product Details Modal Popup */}
-      <AnimatePresence>
-        {activeProduct && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
-            onClick={() => setSelectedProductIndex(null)}
-          >
-            <div 
-              className="relative w-full max-w-2xl bg-[#1e1711] border border-accent/40 rounded-2xl p-6 sm:p-8 text-ink shadow-2xl space-y-6 my-auto max-h-[90vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
+      {typeof document !== 'undefined' && createPortal(
+        <AnimatePresence>
+          {activeProduct && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[100] flex items-center justify-center p-4 sm:p-6"
+              onClick={() => setSelectedProductIndex(null)}
             >
-              {/* Top Header */}
-              <div className="flex items-center justify-between border-b border-accent/20 pb-4">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs uppercase tracking-widest text-accent font-mono">
-                    {activeProduct.category}
-                  </span>
-                  {activeProduct.tag && (
-                    <span className="rounded-md bg-accent/90 px-2 py-0.5 text-[10px] font-semibold text-paper uppercase tracking-wider">
-                      {activeProduct.tag}
+              <div 
+                className="relative w-full max-w-2xl bg-[#1e1711] border border-accent/40 rounded-2xl p-6 sm:p-8 text-ink shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Top Header */}
+                <div className="flex items-center justify-between border-b border-accent/20 pb-4">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs uppercase tracking-widest text-accent font-mono">
+                      {activeProduct.category}
                     </span>
-                  )}
-                </div>
-                <button
-                  onClick={() => setSelectedProductIndex(null)}
-                  className="p-2 rounded-full border border-accent/40 bg-accent/10 text-accent hover:bg-accent hover:text-paper transition-all"
-                  title="Close"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              {/* Content Body */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
-                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-line border border-accent/30">
-                  <img
-                    src={encodeURI(activeProduct.image)}
-                    alt={activeProduct.name}
-                    onError={(e) => { e.target.src = '/services/Wedding.jpg'; }}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="space-y-4 text-left">
-                  <h3 className="font-serif text-2xl font-light text-ink">
-                    {activeProduct.name}
-                  </h3>
-                  <div className="flex items-baseline gap-3">
-                    <span className="font-serif text-2xl font-semibold text-accent">
-                      {activeProduct.price}
-                    </span>
-                    {activeProduct.originalPrice && (
-                      <span className="text-sm text-stone line-through">
-                        {activeProduct.originalPrice}
+                    {activeProduct.tag && (
+                      <span className="rounded-md bg-accent/90 px-2 py-0.5 text-[10px] font-semibold text-paper uppercase tracking-wider">
+                        {activeProduct.tag}
                       </span>
                     )}
                   </div>
-                  <p className="text-xs sm:text-sm text-ink/90 font-light leading-relaxed">
-                    {activeProduct.description}
-                  </p>
-                  {activeProduct.specs && (
-                    <div className="pt-3 border-t border-accent/20 space-y-2">
-                      <p className="text-[10px] uppercase tracking-widest text-accent font-semibold">
-                        Specifications &amp; Features:
-                      </p>
-                      <ul className="space-y-1.5">
-                        {activeProduct.specs.map((spec, i) => (
-                          <li key={i} className="text-xs text-ink/90 font-medium flex items-center gap-2">
-                            <Sparkles className="w-3.5 h-3.5 text-accent shrink-0" />
-                            <span>{spec}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
                   <button
-                    onClick={() => handleWhatsAppOrder(activeProduct)}
-                    className="w-full py-3 px-4 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs uppercase font-semibold tracking-wider flex items-center justify-center gap-2 shadow-lg hover:shadow-emerald-600/30 transition-all mt-4"
+                    onClick={() => setSelectedProductIndex(null)}
+                    className="p-2 rounded-full border border-accent/40 bg-accent/10 text-accent hover:bg-accent hover:text-paper transition-all"
+                    title="Close"
                   >
-                    <MessageCircle className="w-4 h-4" /> Order on WhatsApp
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                {/* Content Body */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
+                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-line border border-accent/30">
+                    <img
+                      src={encodeURI(activeProduct.image)}
+                      alt={activeProduct.name}
+                      onError={(e) => { e.target.src = '/services/Wedding.jpg'; }}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="space-y-4 text-left">
+                    <h3 className="font-serif text-2xl font-light text-ink">
+                      {activeProduct.name}
+                    </h3>
+                    <div className="flex items-baseline gap-3">
+                      <span className="font-serif text-2xl font-semibold text-accent">
+                        {activeProduct.price}
+                      </span>
+                      {activeProduct.originalPrice && (
+                        <span className="text-sm text-stone line-through">
+                          {activeProduct.originalPrice}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs sm:text-sm text-ink/90 font-light leading-relaxed">
+                      {activeProduct.description}
+                    </p>
+                    {activeProduct.specs && (
+                      <div className="pt-3 border-t border-accent/20 space-y-2">
+                        <p className="text-[10px] uppercase tracking-widest text-accent font-semibold">
+                          Specifications &amp; Features:
+                        </p>
+                        <ul className="space-y-1.5">
+                          {activeProduct.specs.map((spec, i) => (
+                            <li key={i} className="text-xs text-ink/90 font-medium flex items-center gap-2">
+                              <Sparkles className="w-3.5 h-3.5 text-accent shrink-0" />
+                              <span>{spec}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    <button
+                      onClick={() => handleWhatsAppOrder(activeProduct)}
+                      className="w-full py-3 px-4 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs uppercase font-semibold tracking-wider flex items-center justify-center gap-2 shadow-lg hover:shadow-emerald-600/30 transition-all mt-4"
+                    >
+                      <MessageCircle className="w-4 h-4" /> Order on WhatsApp
+                    </button>
+                  </div>
+                </div>
+
+                {/* Navigation Controls */}
+                <div className="flex items-center justify-between border-t border-accent/20 pt-4 text-xs text-ink/80">
+                  <button
+                    onClick={handlePrev}
+                    className="flex items-center gap-1 text-ink/80 hover:text-accent transition-colors font-medium"
+                  >
+                    <ChevronLeft className="w-4 h-4" /> Previous
+                  </button>
+                  <span className="font-mono text-[11px] text-accent font-semibold">
+                    {selectedProductIndex + 1} of {filteredProducts.length}
+                  </span>
+                  <button
+                    onClick={handleNext}
+                    className="flex items-center gap-1 text-ink/80 hover:text-accent transition-colors font-medium"
+                  >
+                    Next <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
               </div>
-
-              {/* Navigation Controls */}
-              <div className="flex items-center justify-between border-t border-accent/20 pt-4 text-xs text-ink/80">
-                <button
-                  onClick={handlePrev}
-                  className="flex items-center gap-1 text-ink/80 hover:text-accent transition-colors font-medium"
-                >
-                  <ChevronLeft className="w-4 h-4" /> Previous
-                </button>
-                <span className="font-mono text-[11px] text-accent font-semibold">
-                  {selectedProductIndex + 1} of {filteredProducts.length}
-                </span>
-                <button
-                  onClick={handleNext}
-                  className="flex items-center gap-1 text-ink/80 hover:text-accent transition-colors font-medium"
-                >
-                  Next <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </section>
   );
 }
+
+
 
 
 

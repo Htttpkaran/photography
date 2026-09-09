@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { MessageCircle, X, ChevronLeft, ChevronRight, Maximize2, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -159,98 +160,101 @@ export default function Services() {
       </div>
 
       {/* Service Details Lightbox Modal Popup */}
-      <AnimatePresence>
-        {activeServiceItem && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
-            onClick={() => setSelectedServiceIndex(null)}
-          >
-            <div 
-              className="relative w-full max-w-xl bg-[#251c14] border border-accent/40 rounded-2xl p-6 sm:p-8 text-ink shadow-2xl space-y-6 my-auto max-h-[90vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
+      {typeof document !== 'undefined' && createPortal(
+        <AnimatePresence>
+          {activeServiceItem && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[100] flex items-center justify-center p-4 sm:p-6"
+              onClick={() => setSelectedServiceIndex(null)}
             >
-              {/* Top Header Bar */}
-              <div className="flex items-center justify-between border-b border-accent/20 pb-4">
-                <div className="flex items-center gap-3">
-                  <span className="font-mono text-xs px-2.5 py-1 rounded-md bg-accent/20 border border-accent/40 text-accent font-semibold">
-                    {String(selectedServiceIndex + 1).padStart(2, '0')}
-                  </span>
-                  <span className="text-xs uppercase tracking-widest text-accent font-mono font-medium">
-                    Service Overview
-                  </span>
-                </div>
-                <button
-                  onClick={() => setSelectedServiceIndex(null)}
-                  className="p-2 rounded-full border border-accent/40 bg-accent/10 text-accent hover:bg-accent hover:text-paper transition-all"
-                  title="Close"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              {/* Main Content Body */}
-              <div className="space-y-5 text-left">
-                <div>
-                  <h3 className="font-serif text-2xl sm:text-3xl font-light text-accent">
-                    {activeServiceItem.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-ink/90 font-light leading-relaxed mt-2">
-                    {activeServiceItem.details}
-                  </p>
-                </div>
-
-                {activeServiceItem.features && (
-                  <div className="pt-4 border-t border-accent/20 space-y-3">
-                    <p className="text-[10px] uppercase tracking-widest text-accent font-semibold">
-                      Key Package Inclusions:
-                    </p>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                      {activeServiceItem.features.map((feat, i) => (
-                        <li key={i} className="text-xs text-ink/90 font-medium flex items-center gap-2">
-                          <Sparkles className="w-3.5 h-3.5 text-accent shrink-0" />
-                          <span>{feat}</span>
-                        </li>
-                      ))}
-                    </ul>
+              <div 
+                className="relative w-full max-w-xl bg-[#251c14] border border-accent/40 rounded-2xl p-6 sm:p-8 text-ink shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Top Header Bar */}
+                <div className="flex items-center justify-between border-b border-accent/20 pb-4">
+                  <div className="flex items-center gap-3">
+                    <span className="font-mono text-xs px-2.5 py-1 rounded-md bg-accent/20 border border-accent/40 text-accent font-semibold">
+                      {String(selectedServiceIndex + 1).padStart(2, '0')}
+                    </span>
+                    <span className="text-xs uppercase tracking-widest text-accent font-mono font-medium">
+                      Service Overview
+                    </span>
                   </div>
-                )}
+                  <button
+                    onClick={() => setSelectedServiceIndex(null)}
+                    className="p-2 rounded-full border border-accent/40 bg-accent/10 text-accent hover:bg-accent hover:text-paper transition-all"
+                    title="Close"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
 
-                <a 
-                  href={`https://wa.me/919046412124?text=${encodeURIComponent(`Hi Golden Moments Photography, I want to inquire about ${activeServiceItem.title} service.`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs uppercase font-semibold tracking-wider shadow-lg hover:shadow-emerald-600/30 transition-all text-center mt-4"
-                >
-                  <MessageCircle className="w-4 h-4" /> Book on WhatsApp
-                </a>
-              </div>
+                {/* Main Content Body */}
+                <div className="space-y-5 text-left">
+                  <div>
+                    <h3 className="font-serif text-2xl sm:text-3xl font-light text-accent">
+                      {activeServiceItem.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-ink/90 font-light leading-relaxed mt-2">
+                      {activeServiceItem.details}
+                    </p>
+                  </div>
 
-              {/* Navigation Controls */}
-              <div className="flex items-center justify-between border-t border-accent/20 pt-4 text-xs text-ink/80">
-                <button
-                  onClick={handlePrev}
-                  className="flex items-center gap-1 text-ink/80 hover:text-accent transition-colors font-medium"
-                >
-                  <ChevronLeft className="w-4 h-4" /> Previous
-                </button>
-                <span className="font-mono text-[11px] text-accent font-semibold">
-                  {selectedServiceIndex + 1} of {displayedOfferings.length}
-                </span>
-                <button
-                  onClick={handleNext}
-                  className="flex items-center gap-1 text-ink/80 hover:text-accent transition-colors font-medium"
-                >
-                  Next <ChevronRight className="w-4 h-4" />
-                </button>
+                  {activeServiceItem.features && (
+                    <div className="pt-4 border-t border-accent/20 space-y-3">
+                      <p className="text-[10px] uppercase tracking-widest text-accent font-semibold">
+                        Key Package Inclusions:
+                      </p>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        {activeServiceItem.features.map((feat, i) => (
+                          <li key={i} className="text-xs text-ink/90 font-medium flex items-center gap-2">
+                            <Sparkles className="w-3.5 h-3.5 text-accent shrink-0" />
+                            <span>{feat}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  <a 
+                    href={`https://wa.me/919046412124?text=${encodeURIComponent(`Hi Golden Moments Photography, I want to inquire about ${activeServiceItem.title} service.`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs uppercase font-semibold tracking-wider shadow-lg hover:shadow-emerald-600/30 transition-all text-center mt-4"
+                  >
+                    <MessageCircle className="w-4 h-4" /> Book on WhatsApp
+                  </a>
+                </div>
+
+                {/* Navigation Controls */}
+                <div className="flex items-center justify-between border-t border-accent/20 pt-4 text-xs text-ink/80">
+                  <button
+                    onClick={handlePrev}
+                    className="flex items-center gap-1 text-ink/80 hover:text-accent transition-colors font-medium"
+                  >
+                    <ChevronLeft className="w-4 h-4" /> Previous
+                  </button>
+                  <span className="font-mono text-[11px] text-accent font-semibold">
+                    {selectedServiceIndex + 1} of {displayedOfferings.length}
+                  </span>
+                  <button
+                    onClick={handleNext}
+                    className="flex items-center gap-1 text-ink/80 hover:text-accent transition-colors font-medium"
+                  >
+                    Next <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </section>
   );
 }
