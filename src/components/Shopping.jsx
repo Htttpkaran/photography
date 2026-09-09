@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Sparkles, MessageCircle, X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -118,6 +118,17 @@ export default function Shopping() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedProductIndex, setSelectedProductIndex] = useState(null);
 
+  useEffect(() => {
+    if (selectedProductIndex !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedProductIndex]);
+
   const filteredProducts = selectedCategory === 'All'
     ? products
     : products.filter((p) => p.category === selectedCategory);
@@ -150,10 +161,10 @@ export default function Shopping() {
           <ShoppingBag className="w-4 h-4" /> Golden Store
         </span>
         <h2 className="font-serif text-3xl md:text-5xl font-light text-ink">
-          Prints, Albums &amp; <span className="italic text-gold-shimmer font-normal">Presets</span>
+          Prints, Albums &amp; <span className="italic text-gold-shimmer font-normal">Gift</span>
         </h2>
         <p className="font-sans text-stone text-xs sm:text-sm tracking-wide font-light leading-relaxed max-w-xl mx-auto">
-          Preserve your golden memories with luxury canvas frames, custom photo albums, color LUTs, and gift vouchers.
+          Preserve your golden memories with luxury canvas frames, custom photo albums, and gift vouchers.
         </p>
       </div>
 

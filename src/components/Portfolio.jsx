@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 
@@ -300,6 +300,17 @@ export default function Portfolio() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [showAll, setShowAll] = useState(false);
   const [selectedItemIndex, setSelectedItemIndex] = useState(null);
+
+  useEffect(() => {
+    if (selectedItemIndex !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedItemIndex]);
 
   const allFiltered = activeFilter === 'All'
     ? portfolioItems

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MessageCircle, X, ChevronLeft, ChevronRight, Maximize2, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -73,6 +73,17 @@ const offerings = [
 export default function Services() {
   const [showAll, setShowAll] = useState(false);
   const [selectedServiceIndex, setSelectedServiceIndex] = useState(null);
+
+  useEffect(() => {
+    if (selectedServiceIndex !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedServiceIndex]);
 
   const handleToggleShowAll = () => {
     if (showAll) {

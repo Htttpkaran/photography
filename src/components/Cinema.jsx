@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const categories = [
   'All',
   'Pre-Wedding',
-  'Engagement',
+  'Engagement & Blessing Ceremony',
   'Mehendi & Sangeet',
   'Wedding',
   'Maternity & Baby Shower',
@@ -51,7 +51,7 @@ const youtubeVideos = [
     id: 'TDrudLkqzgc',
     title: 'Aliva Weds Sourav',
     subtitle: 'Pre-Wedding Cinematic Highlights',
-    category: 'Pre-Wedding',
+    category: 'Wedding',
     duration: '2:45',
     uploaded: 'Golden Moments Studio'
   },
@@ -79,14 +79,6 @@ const youtubeVideos = [
     subtitle: 'Rice Ceremony Cinematic Teaser',
     category: 'Rice Ceremony & Birthday',
     duration: '2:47',
-    uploaded: 'Golden Moments Studio'
-  },
-  {
-    id: 'UEMm6IX1rt0',
-    title: "Rishan's 1st Birthday Celebration",
-    subtitle: 'Birthday Highlights',
-    category: 'Rice Ceremony & Birthday',
-    duration: '4:02',
     uploaded: 'Golden Moments Studio'
   },
 
@@ -127,15 +119,55 @@ const youtubeVideos = [
     id: 'LsQOtYsx2_0',
     title: 'Namrata & Arijit',
     subtitle: 'Engagement Highlights',
-    category: 'Engagement',
+    category: 'Engagement & Blessing Ceremony',
     duration: '33:40',
+    uploaded: 'Golden Moments Studio'
+  },
+  {
+    id: '5o3fWwPZ0uc',
+    title: 'Engagement Ceremony',
+    subtitle: 'Rupsa & Krishnayan',
+    category: 'Engagement & Blessing Ceremony',
+    duration: 'Full HD',
+    uploaded: 'Golden Moments Studio'
+  },
+  {
+    id: 'qYFfHhSSwLo',
+    title: 'Blessing Ceremony of Namrata',
+    subtitle: 'Blessing Ceremony Film',
+    category: 'Engagement & Blessing Ceremony',
+    duration: 'Full HD',
+    uploaded: 'Golden Moments Studio'
+  },
+  {
+    id: 'ZO0bDfKGUg8',
+    title: "Swastika's Blessing Ceremony",
+    subtitle: 'Blessing Ceremony Film',
+    category: 'Engagement & Blessing Ceremony',
+    duration: 'Full HD',
+    uploaded: 'Golden Moments Studio'
+  },
+  {
+    id: 'v0gXa50glxU',
+    title: "Swastika's Mehendi & Sangeet",
+    subtitle: 'Mehendi & Sangeet Ceremony',
+    category: 'Mehendi & Sangeet',
+    duration: 'Cinematic',
+    uploaded: 'Golden Moments Studio'
+  },
+  {
+    id: 'UynnrXMnwBQ',
+    title: 'Mehendi & Sangeet of Rupsa',
+    subtitle: 'Bengali Wedding Cinematic',
+    category: 'Mehendi & Sangeet',
+    duration: 'Full HD',
     uploaded: 'Golden Moments Studio'
   },
   {
     id: 'ejan_AC2h80',
     title: 'Swastika & Subham',
     subtitle: 'Mehendi & Sangeet Celebrations',
-    category: 'Mehendi & Sangeet',
+    category: 'Wedding',
     duration: '1:21:48',
     uploaded: 'Golden Moments Studio'
   }
